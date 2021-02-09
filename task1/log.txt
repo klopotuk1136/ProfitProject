@@ -1,0 +1,12 @@
+$ git log
+commit 1653a8ef36b9f38b3a90ee6cec1e1a9e7f0b0300 (HEAD -> master)
+Author: Pavel <klopotuk@gmail.com>
+Date:   Tue Feb 9 23:32:33 2021 +0300
+
+    add status.txt
+
+commit c431467aadebdfc73f5a08b58b13fdca7ffd2a39
+Author: Pavel <klopotuk@gmail.com>
+Date:   Tue Feb 9 23:30:30 2021 +0300
+
+    add .gitignore

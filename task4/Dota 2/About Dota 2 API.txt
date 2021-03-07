@@ -1,0 +1,8 @@
+https://api.opendota.com/api/players/155057468/matches?win=1&hero_id=13
+returns win matches played by player with id 155057468 on hero with id 13
+
+https://api.opendota.com/api/heroes/13/itemPopularity
+returns most popular items for hero with id 13
+
+https://api.opendota.com/api/teams
+returns list of professional teams

@@ -1,0 +1,8 @@
+https://api.chucknorris.io/jokes/categories
+returns list of categories of jokes about Chuck Norris
+
+https://api.chucknorris.io/jokes/random?category=dev
+returns a random joke about Chuck Norris from a dev category
+
+https://api.chucknorris.io/jokes/search?query=guitar
+returns list of jokes with the word guitar

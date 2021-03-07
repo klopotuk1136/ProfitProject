@@ -1,0 +1,8 @@
+http://makeup-api.herokuapp.com/api/v1/products.json?brand=covergirl&product_type=eyeliner
+returns information about covergirl eyeliners
+
+http://makeup-api.herokuapp.com/api/v1/products.json?brand=dior&price_greater_than=60
+returns DIOR cosmetics with price greater than 60
+
+http://makeup-api.herokuapp.com/api/v1/products.json?product_type=bronzer&product_tags=vegan
+returns vegan Bronzers

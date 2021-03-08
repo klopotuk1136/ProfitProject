@@ -179,6 +179,7 @@ body{
 .button-load-more{
     font-size: 2rem;
     width: 12rem;
+    margin-bottom: 1rem;
 }
 /*footer*/
 .information{

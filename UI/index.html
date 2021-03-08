@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta content="Sales and discounts">
+            <title>Profit!</title>
+            <link rel="stylesheet" href="styles.css">
+        </head>
+        <body>
+            <header class="header">
+                <a class="site-name" href="#">
+                    <h1 class="site-name-button">Profit!</h1>
+                </a>
+                <div class="name-and-sign-out">
+                    <p class="profile">Alesha Popovich</p>
+                    <button class="log-out">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sign-out-alt" class="svg-inline--fa fa-sign-out-alt fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"></path></svg>
+                    </button>
+                </div>
+            </header>
+            <div class="filters-box">
+                <input class="date-filter filter" type="date">
+                <input class="name-filter filter" type="text" placeholder="Enter vendor name">
+                <input class="hashtag-filter filter" type="text" placeholder="Enter hashtag">
+            </div>
+
+            <main class="offers-list">
+                <Button class="button-load-more">
+                    Add an offer
+                </Button>
+                <article class="offer">
+                    <div class="top-info-offer">
+                        <div class="left-info-offer">
+                            <div class="image-and-percent">
+                                <img src="blank_image.png" class="image" alt="Offer photo">
+                                <p class="percent">15%</p>
+                            </div>
+                            <p class="date-expiration">Until 20.08.2021</p>
+                        </div>
+                        <div class="right-info-offer">
+                            <div class="centralized-line-right-info ">
+                                <h3 class="offer-label">label of an offer</h3>
+                                <p class="seller-name">Seller name</p>
+                                <a class="seller-link" href="#">Link for full info</a>
+                                <div class="buttons">
+                                    <button class="button-settings-offer button-offer">
+                                        <svg class="button-svg" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m22.683 9.394-1.88-.239c-.155-.477-.346-.937-.569-1.374l1.161-1.495c.47-.605.415-1.459-.122-1.979l-1.575-1.575c-.525-.542-1.379-.596-1.985-.127l-1.493 1.161c-.437-.223-.897-.414-1.375-.569l-.239-1.877c-.09-.753-.729-1.32-1.486-1.32h-2.24c-.757 0-1.396.567-1.486 1.317l-.239 1.88c-.478.155-.938.345-1.375.569l-1.494-1.161c-.604-.469-1.458-.415-1.979.122l-1.575 1.574c-.542.526-.597 1.38-.127 1.986l1.161 1.494c-.224.437-.414.897-.569 1.374l-1.877.239c-.753.09-1.32.729-1.32 1.486v2.24c0 .757.567 1.396 1.317 1.486l1.88.239c.155.477.346.937.569 1.374l-1.161 1.495c-.47.605-.415 1.459.122 1.979l1.575 1.575c.526.541 1.379.595 1.985.126l1.494-1.161c.437.224.897.415 1.374.569l.239 1.876c.09.755.729 1.322 1.486 1.322h2.24c.757 0 1.396-.567 1.486-1.317l.239-1.88c.477-.155.937-.346 1.374-.569l1.495 1.161c.605.47 1.459.415 1.979-.122l1.575-1.575c.542-.526.597-1.379.127-1.985l-1.161-1.494c.224-.437.415-.897.569-1.374l1.876-.239c.753-.09 1.32-.729 1.32-1.486v-2.24c.001-.757-.566-1.396-1.316-1.486zm-10.683 7.606c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"/></svg>
+                                    </button>
+                                    <button class="button-delete-offer button-offer">
+                                        <svg class="button-svg" id="Capa_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m442.154 145c10.585 0 17.924-10.701 13.955-20.514-14.093-34.841-48.275-59.486-88.109-59.486h-18.414c-6.867-36.273-38.67-65-77.586-65h-32c-38.891 0-70.715 28.708-77.586 65h-18.414c-39.834 0-74.016 24.645-88.109 59.486-3.969 9.813 3.37 20.514 13.955 20.514zm-202.154-115h32c21.9 0 40.49 14.734 46.748 35h-125.496c6.258-20.266 24.848-35 46.748-35z"/><path d="m111.053 470.196c1.669 23.442 21.386 41.804 44.886 41.804h200.121c23.5 0 43.217-18.362 44.886-41.804l21.023-295.196h-331.938zm185.966-214.945c.414-8.274 7.469-14.655 15.73-14.232 8.274.414 14.646 7.457 14.232 15.73l-8 160c-.401 8.019-7.029 14.251-14.969 14.251-8.637 0-15.42-7.223-14.994-15.749zm-97.768-14.232c8.263-.415 15.317 5.959 15.73 14.232l8 160c.426 8.53-6.362 15.749-14.994 15.749-7.94 0-14.568-6.232-14.969-14.251l-8-160c-.413-8.273 5.959-15.316 14.233-15.73z"/></g></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="description-offer">Description text
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat lectus ante, non dapibus sapien accumsan in. Integer vitae euismod erat, at aliquam lacus. Maecenas eu ligula tortor. Praesent ac luctus sapien. Suspendisse eget ipsum lacus. Aliquam venenatis urna vitae risus lacinia pulvinar. Suspendisse in mattis tortor, eget porttitor mauris.Phasellus eget eros tincidunt, elementum quam vitae, tincidunt tortor. Suspendisse non ante malesuada, viverra arcu vel, aliquet tortor. In tempor consequat augue, nec blandit augue ultricies condimentum. Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+                                </p>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="hashtags-offer">Hashtags: 
+                                    <span class="tag">Hashtag1</span>
+                                    <span class="tag">Hashtag2</span>
+                                    <span class="tag">Hashtag3</span>
+                                    <span class="tag">Hashtag4</span>
+                                    <span class="tag">Hashtag5</span>
+                                    <span class="tag">Hashtag6</span>
+                                    <span class="tag">Hashtag7</span>
+                                </p>
+                            </div>
+                            <div class="reviews-offer line-right-info">
+                                <p class="rewiew">Reviewer-name: 
+                                    <span class="review">Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-info-offer">
+                        <p class="rating">Rating <span class="rating-number">4.5</span>/5</p>
+                        <button class="add-comment comments-button">Add comment</button>
+                        <button class="more-comments comments-button">More comments</button>
+                    </div>
+                </article>
+                <article class="offer">
+                    <div class="top-info-offer">
+                        <div class="left-info-offer">
+                            <div class="image-and-percent">
+                                <img src="blank_image.png" class="image" alt="Offer photo">
+                                <p class="percent">15%</p>
+                            </div>
+                            <p class="date-expiration">Until 20.08.2021</p>
+                        </div>
+                        <div class="right-info-offer">
+                            <div class="centralized-line-right-info ">
+                                <h3 class="offer-label">label of an offer</h3>
+                                <p class="seller-name">Seller name</p>
+                                <a class="seller-link" href="#">Link for full info</a>
+                                <div class="buttons">
+                                    <button class="button-settings-offer button-offer">
+                                        <svg class="button-svg" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m22.683 9.394-1.88-.239c-.155-.477-.346-.937-.569-1.374l1.161-1.495c.47-.605.415-1.459-.122-1.979l-1.575-1.575c-.525-.542-1.379-.596-1.985-.127l-1.493 1.161c-.437-.223-.897-.414-1.375-.569l-.239-1.877c-.09-.753-.729-1.32-1.486-1.32h-2.24c-.757 0-1.396.567-1.486 1.317l-.239 1.88c-.478.155-.938.345-1.375.569l-1.494-1.161c-.604-.469-1.458-.415-1.979.122l-1.575 1.574c-.542.526-.597 1.38-.127 1.986l1.161 1.494c-.224.437-.414.897-.569 1.374l-1.877.239c-.753.09-1.32.729-1.32 1.486v2.24c0 .757.567 1.396 1.317 1.486l1.88.239c.155.477.346.937.569 1.374l-1.161 1.495c-.47.605-.415 1.459.122 1.979l1.575 1.575c.526.541 1.379.595 1.985.126l1.494-1.161c.437.224.897.415 1.374.569l.239 1.876c.09.755.729 1.322 1.486 1.322h2.24c.757 0 1.396-.567 1.486-1.317l.239-1.88c.477-.155.937-.346 1.374-.569l1.495 1.161c.605.47 1.459.415 1.979-.122l1.575-1.575c.542-.526.597-1.379.127-1.985l-1.161-1.494c.224-.437.415-.897.569-1.374l1.876-.239c.753-.09 1.32-.729 1.32-1.486v-2.24c.001-.757-.566-1.396-1.316-1.486zm-10.683 7.606c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"/></svg>
+                                    </button>
+                                    <button class="button-delete-offer button-offer">
+                                        <svg class="button-svg" id="Capa_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m442.154 145c10.585 0 17.924-10.701 13.955-20.514-14.093-34.841-48.275-59.486-88.109-59.486h-18.414c-6.867-36.273-38.67-65-77.586-65h-32c-38.891 0-70.715 28.708-77.586 65h-18.414c-39.834 0-74.016 24.645-88.109 59.486-3.969 9.813 3.37 20.514 13.955 20.514zm-202.154-115h32c21.9 0 40.49 14.734 46.748 35h-125.496c6.258-20.266 24.848-35 46.748-35z"/><path d="m111.053 470.196c1.669 23.442 21.386 41.804 44.886 41.804h200.121c23.5 0 43.217-18.362 44.886-41.804l21.023-295.196h-331.938zm185.966-214.945c.414-8.274 7.469-14.655 15.73-14.232 8.274.414 14.646 7.457 14.232 15.73l-8 160c-.401 8.019-7.029 14.251-14.969 14.251-8.637 0-15.42-7.223-14.994-15.749zm-97.768-14.232c8.263-.415 15.317 5.959 15.73 14.232l8 160c.426 8.53-6.362 15.749-14.994 15.749-7.94 0-14.568-6.232-14.969-14.251l-8-160c-.413-8.273 5.959-15.316 14.233-15.73z"/></g></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="description-offer">Description text
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat lectus ante, non dapibus sapien accumsan in. Integer vitae euismod erat, at aliquam lacus. Maecenas eu ligula tortor. Praesent ac luctus sapien. Suspendisse eget ipsum lacus. Aliquam venenatis urna vitae risus lacinia pulvinar. Suspendisse in mattis tortor, eget porttitor mauris.Phasellus eget eros tincidunt, elementum quam vitae, tincidunt tortor. Suspendisse non ante malesuada, viverra arcu vel, aliquet tortor. In tempor consequat augue, nec blandit augue ultricies condimentum. Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+                                </p>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="hashtags-offer">Hashtags: 
+                                    <span class="tag">Hashtag1</span>
+                                    <span class="tag">Hashtag2</span>
+                                    <span class="tag">Hashtag3</span>
+                                    <span class="tag">Hashtag4</span>
+                                    <span class="tag">Hashtag5</span>
+                                    <span class="tag">Hashtag6</span>
+                                    <span class="tag">Hashtag7</span>
+                                </p>
+                            </div>
+                            <div class="reviews-offer line-right-info">
+                                <p class="rewiew">Reviewer-name: 
+                                    <span class="review">Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-info-offer">
+                        <p class="rating">Rating <span class="rating-number">4.5</span>/5</p>
+                        <button class="add-comment comments-button">Add comment</button>
+                        <button class="more-comments comments-button">More comments</button>
+                    </div>
+                </article>
+                <article class="offer">
+                    <div class="top-info-offer">
+                        <div class="left-info-offer">
+                            <div class="image-and-percent">
+                                <img src="blank_image.png" class="image" alt="Offer photo">
+                                <p class="percent">15%</p>
+                            </div>
+                            <p class="date-expiration">Until 20.08.2021</p>
+                        </div>
+                        <div class="right-info-offer">
+                            <div class="centralized-line-right-info ">
+                                <h3 class="offer-label">label of an offer</h3>
+                                <p class="seller-name">Seller name</p>
+                                <a class="seller-link" href="#">Link for full info</a>
+                                <div class="buttons">
+                                    <button class="button-settings-offer button-offer">
+                                        <svg class="button-svg" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m22.683 9.394-1.88-.239c-.155-.477-.346-.937-.569-1.374l1.161-1.495c.47-.605.415-1.459-.122-1.979l-1.575-1.575c-.525-.542-1.379-.596-1.985-.127l-1.493 1.161c-.437-.223-.897-.414-1.375-.569l-.239-1.877c-.09-.753-.729-1.32-1.486-1.32h-2.24c-.757 0-1.396.567-1.486 1.317l-.239 1.88c-.478.155-.938.345-1.375.569l-1.494-1.161c-.604-.469-1.458-.415-1.979.122l-1.575 1.574c-.542.526-.597 1.38-.127 1.986l1.161 1.494c-.224.437-.414.897-.569 1.374l-1.877.239c-.753.09-1.32.729-1.32 1.486v2.24c0 .757.567 1.396 1.317 1.486l1.88.239c.155.477.346.937.569 1.374l-1.161 1.495c-.47.605-.415 1.459.122 1.979l1.575 1.575c.526.541 1.379.595 1.985.126l1.494-1.161c.437.224.897.415 1.374.569l.239 1.876c.09.755.729 1.322 1.486 1.322h2.24c.757 0 1.396-.567 1.486-1.317l.239-1.88c.477-.155.937-.346 1.374-.569l1.495 1.161c.605.47 1.459.415 1.979-.122l1.575-1.575c.542-.526.597-1.379.127-1.985l-1.161-1.494c.224-.437.415-.897.569-1.374l1.876-.239c.753-.09 1.32-.729 1.32-1.486v-2.24c.001-.757-.566-1.396-1.316-1.486zm-10.683 7.606c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"/></svg>
+                                    </button>
+                                    <button class="button-delete-offer button-offer">
+                                        <svg class="button-svg" id="Capa_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m442.154 145c10.585 0 17.924-10.701 13.955-20.514-14.093-34.841-48.275-59.486-88.109-59.486h-18.414c-6.867-36.273-38.67-65-77.586-65h-32c-38.891 0-70.715 28.708-77.586 65h-18.414c-39.834 0-74.016 24.645-88.109 59.486-3.969 9.813 3.37 20.514 13.955 20.514zm-202.154-115h32c21.9 0 40.49 14.734 46.748 35h-125.496c6.258-20.266 24.848-35 46.748-35z"/><path d="m111.053 470.196c1.669 23.442 21.386 41.804 44.886 41.804h200.121c23.5 0 43.217-18.362 44.886-41.804l21.023-295.196h-331.938zm185.966-214.945c.414-8.274 7.469-14.655 15.73-14.232 8.274.414 14.646 7.457 14.232 15.73l-8 160c-.401 8.019-7.029 14.251-14.969 14.251-8.637 0-15.42-7.223-14.994-15.749zm-97.768-14.232c8.263-.415 15.317 5.959 15.73 14.232l8 160c.426 8.53-6.362 15.749-14.994 15.749-7.94 0-14.568-6.232-14.969-14.251l-8-160c-.413-8.273 5.959-15.316 14.233-15.73z"/></g></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="description-offer">Description text
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat lectus ante, non dapibus sapien accumsan in. Integer vitae euismod erat, at aliquam lacus. Maecenas eu ligula tortor. Praesent ac luctus sapien. Suspendisse eget ipsum lacus. Aliquam venenatis urna vitae risus lacinia pulvinar. Suspendisse in mattis tortor, eget porttitor mauris.Phasellus eget eros tincidunt, elementum quam vitae, tincidunt tortor. Suspendisse non ante malesuada, viverra arcu vel, aliquet tortor. In tempor consequat augue, nec blandit augue ultricies condimentum. Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+                                </p>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="hashtags-offer">Hashtags: 
+                                    <span class="tag">Hashtag1</span>
+                                    <span class="tag">Hashtag2</span>
+                                    <span class="tag">Hashtag3</span>
+                                    <span class="tag">Hashtag4</span>
+                                    <span class="tag">Hashtag5</span>
+                                    <span class="tag">Hashtag6</span>
+                                    <span class="tag">Hashtag7</span>
+                                </p>
+                            </div>
+                            <div class="reviews-offer line-right-info">
+                                <p class="rewiew">Reviewer-name: 
+                                    <span class="review">Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-info-offer">
+                        <p class="rating">Rating <span class="rating-number">4.5</span>/5</p>
+                        <button class="add-comment comments-button">Add comment</button>
+                        <button class="more-comments comments-button">More comments</button>
+                    </div>
+                </article>
+                <article class="offer">
+                    <div class="top-info-offer">
+                        <div class="left-info-offer">
+                            <div class="image-and-percent">
+                                <img src="blank_image.png" class="image" alt="Offer photo">
+                                <p class="percent">15%</p>
+                            </div>
+                            <p class="date-expiration">Until 20.08.2021</p>
+                        </div>
+                        <div class="right-info-offer">
+                            <div class="centralized-line-right-info ">
+                                <h3 class="offer-label">label of an offer</h3>
+                                <p class="seller-name">Seller name</p>
+                                <a class="seller-link" href="#">Link for full info</a>
+                                <div class="buttons">
+                                    <button class="button-settings-offer button-offer">
+                                        <svg class="button-svg" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m22.683 9.394-1.88-.239c-.155-.477-.346-.937-.569-1.374l1.161-1.495c.47-.605.415-1.459-.122-1.979l-1.575-1.575c-.525-.542-1.379-.596-1.985-.127l-1.493 1.161c-.437-.223-.897-.414-1.375-.569l-.239-1.877c-.09-.753-.729-1.32-1.486-1.32h-2.24c-.757 0-1.396.567-1.486 1.317l-.239 1.88c-.478.155-.938.345-1.375.569l-1.494-1.161c-.604-.469-1.458-.415-1.979.122l-1.575 1.574c-.542.526-.597 1.38-.127 1.986l1.161 1.494c-.224.437-.414.897-.569 1.374l-1.877.239c-.753.09-1.32.729-1.32 1.486v2.24c0 .757.567 1.396 1.317 1.486l1.88.239c.155.477.346.937.569 1.374l-1.161 1.495c-.47.605-.415 1.459.122 1.979l1.575 1.575c.526.541 1.379.595 1.985.126l1.494-1.161c.437.224.897.415 1.374.569l.239 1.876c.09.755.729 1.322 1.486 1.322h2.24c.757 0 1.396-.567 1.486-1.317l.239-1.88c.477-.155.937-.346 1.374-.569l1.495 1.161c.605.47 1.459.415 1.979-.122l1.575-1.575c.542-.526.597-1.379.127-1.985l-1.161-1.494c.224-.437.415-.897.569-1.374l1.876-.239c.753-.09 1.32-.729 1.32-1.486v-2.24c.001-.757-.566-1.396-1.316-1.486zm-10.683 7.606c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"/></svg>
+                                    </button>
+                                    <button class="button-delete-offer button-offer">
+                                        <svg class="button-svg" id="Capa_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m442.154 145c10.585 0 17.924-10.701 13.955-20.514-14.093-34.841-48.275-59.486-88.109-59.486h-18.414c-6.867-36.273-38.67-65-77.586-65h-32c-38.891 0-70.715 28.708-77.586 65h-18.414c-39.834 0-74.016 24.645-88.109 59.486-3.969 9.813 3.37 20.514 13.955 20.514zm-202.154-115h32c21.9 0 40.49 14.734 46.748 35h-125.496c6.258-20.266 24.848-35 46.748-35z"/><path d="m111.053 470.196c1.669 23.442 21.386 41.804 44.886 41.804h200.121c23.5 0 43.217-18.362 44.886-41.804l21.023-295.196h-331.938zm185.966-214.945c.414-8.274 7.469-14.655 15.73-14.232 8.274.414 14.646 7.457 14.232 15.73l-8 160c-.401 8.019-7.029 14.251-14.969 14.251-8.637 0-15.42-7.223-14.994-15.749zm-97.768-14.232c8.263-.415 15.317 5.959 15.73 14.232l8 160c.426 8.53-6.362 15.749-14.994 15.749-7.94 0-14.568-6.232-14.969-14.251l-8-160c-.413-8.273 5.959-15.316 14.233-15.73z"/></g></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="description-offer">Description text
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat lectus ante, non dapibus sapien accumsan in. Integer vitae euismod erat, at aliquam lacus. Maecenas eu ligula tortor. Praesent ac luctus sapien. Suspendisse eget ipsum lacus. Aliquam venenatis urna vitae risus lacinia pulvinar. Suspendisse in mattis tortor, eget porttitor mauris.Phasellus eget eros tincidunt, elementum quam vitae, tincidunt tortor. Suspendisse non ante malesuada, viverra arcu vel, aliquet tortor. In tempor consequat augue, nec blandit augue ultricies condimentum. Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+                                </p>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="hashtags-offer">Hashtags: 
+                                    <span class="tag">Hashtag1</span>
+                                    <span class="tag">Hashtag2</span>
+                                    <span class="tag">Hashtag3</span>
+                                    <span class="tag">Hashtag4</span>
+                                    <span class="tag">Hashtag5</span>
+                                    <span class="tag">Hashtag6</span>
+                                    <span class="tag">Hashtag7</span>
+                                </p>
+                            </div>
+                            <div class="reviews-offer line-right-info">
+                                <p class="rewiew">Reviewer-name: 
+                                    <span class="review">Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-info-offer">
+                        <p class="rating">Rating <span class="rating-number">4.5</span>/5</p>
+                        <button class="add-comment comments-button">Add comment</button>
+                        <button class="more-comments comments-button">More comments</button>
+                    </div>
+                </article>
+                <article class="offer">
+                    <div class="top-info-offer">
+                        <div class="left-info-offer">
+                            <div class="image-and-percent">
+                                <img src="blank_image.png" class="image" alt="Offer photo">
+                                <p class="percent">15%</p>
+                            </div>
+                            <p class="date-expiration">Until 20.08.2021</p>
+                        </div>
+                        <div class="right-info-offer">
+                            <div class="centralized-line-right-info ">
+                                <h3 class="offer-label">label of an offer</h3>
+                                <p class="seller-name">Seller name</p>
+                                <a class="seller-link" href="#">Link for full info</a>
+                                <div class="buttons">
+                                    <button class="button-settings-offer button-offer">
+                                        <svg class="button-svg" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m22.683 9.394-1.88-.239c-.155-.477-.346-.937-.569-1.374l1.161-1.495c.47-.605.415-1.459-.122-1.979l-1.575-1.575c-.525-.542-1.379-.596-1.985-.127l-1.493 1.161c-.437-.223-.897-.414-1.375-.569l-.239-1.877c-.09-.753-.729-1.32-1.486-1.32h-2.24c-.757 0-1.396.567-1.486 1.317l-.239 1.88c-.478.155-.938.345-1.375.569l-1.494-1.161c-.604-.469-1.458-.415-1.979.122l-1.575 1.574c-.542.526-.597 1.38-.127 1.986l1.161 1.494c-.224.437-.414.897-.569 1.374l-1.877.239c-.753.09-1.32.729-1.32 1.486v2.24c0 .757.567 1.396 1.317 1.486l1.88.239c.155.477.346.937.569 1.374l-1.161 1.495c-.47.605-.415 1.459.122 1.979l1.575 1.575c.526.541 1.379.595 1.985.126l1.494-1.161c.437.224.897.415 1.374.569l.239 1.876c.09.755.729 1.322 1.486 1.322h2.24c.757 0 1.396-.567 1.486-1.317l.239-1.88c.477-.155.937-.346 1.374-.569l1.495 1.161c.605.47 1.459.415 1.979-.122l1.575-1.575c.542-.526.597-1.379.127-1.985l-1.161-1.494c.224-.437.415-.897.569-1.374l1.876-.239c.753-.09 1.32-.729 1.32-1.486v-2.24c.001-.757-.566-1.396-1.316-1.486zm-10.683 7.606c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"/></svg>
+                                    </button>
+                                    <button class="button-delete-offer button-offer">
+                                        <svg class="button-svg" id="Capa_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m442.154 145c10.585 0 17.924-10.701 13.955-20.514-14.093-34.841-48.275-59.486-88.109-59.486h-18.414c-6.867-36.273-38.67-65-77.586-65h-32c-38.891 0-70.715 28.708-77.586 65h-18.414c-39.834 0-74.016 24.645-88.109 59.486-3.969 9.813 3.37 20.514 13.955 20.514zm-202.154-115h32c21.9 0 40.49 14.734 46.748 35h-125.496c6.258-20.266 24.848-35 46.748-35z"/><path d="m111.053 470.196c1.669 23.442 21.386 41.804 44.886 41.804h200.121c23.5 0 43.217-18.362 44.886-41.804l21.023-295.196h-331.938zm185.966-214.945c.414-8.274 7.469-14.655 15.73-14.232 8.274.414 14.646 7.457 14.232 15.73l-8 160c-.401 8.019-7.029 14.251-14.969 14.251-8.637 0-15.42-7.223-14.994-15.749zm-97.768-14.232c8.263-.415 15.317 5.959 15.73 14.232l8 160c.426 8.53-6.362 15.749-14.994 15.749-7.94 0-14.568-6.232-14.969-14.251l-8-160c-.413-8.273 5.959-15.316 14.233-15.73z"/></g></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="description-offer">Description text
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat lectus ante, non dapibus sapien accumsan in. Integer vitae euismod erat, at aliquam lacus. Maecenas eu ligula tortor. Praesent ac luctus sapien. Suspendisse eget ipsum lacus. Aliquam venenatis urna vitae risus lacinia pulvinar. Suspendisse in mattis tortor, eget porttitor mauris.Phasellus eget eros tincidunt, elementum quam vitae, tincidunt tortor. Suspendisse non ante malesuada, viverra arcu vel, aliquet tortor. In tempor consequat augue, nec blandit augue ultricies condimentum. Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+                                </p>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="hashtags-offer">Hashtags: 
+                                    <span class="tag">Hashtag1</span>
+                                    <span class="tag">Hashtag2</span>
+                                    <span class="tag">Hashtag3</span>
+                                    <span class="tag">Hashtag4</span>
+                                    <span class="tag">Hashtag5</span>
+                                    <span class="tag">Hashtag6</span>
+                                    <span class="tag">Hashtag7</span>
+                                </p>
+                            </div>
+                            <div class="reviews-offer line-right-info">
+                                <p class="rewiew">Reviewer-name: 
+                                    <span class="review">Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-info-offer">
+                        <p class="rating">Rating <span class="rating-number">4.5</span>/5</p>
+                        <button class="add-comment comments-button">Add comment</button>
+                        <button class="more-comments comments-button">More comments</button>
+                    </div>
+                </article>
+                <article class="offer">
+                    <div class="top-info-offer">
+                        <div class="left-info-offer">
+                            <div class="image-and-percent">
+                                <img src="blank_image.png" class="image" alt="Offer photo">
+                                <p class="percent">15%</p>
+                            </div>
+                            <p class="date-expiration">Until 20.08.2021</p>
+                        </div>
+                        <div class="right-info-offer">
+                            <div class="centralized-line-right-info ">
+                                <h3 class="offer-label">label of an offer</h3>
+                                <p class="seller-name">Seller name</p>
+                                <a class="seller-link" href="#">Link for full info</a>
+                                <div class="buttons">
+                                    <button class="button-settings-offer button-offer">
+                                        <svg class="button-svg" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m22.683 9.394-1.88-.239c-.155-.477-.346-.937-.569-1.374l1.161-1.495c.47-.605.415-1.459-.122-1.979l-1.575-1.575c-.525-.542-1.379-.596-1.985-.127l-1.493 1.161c-.437-.223-.897-.414-1.375-.569l-.239-1.877c-.09-.753-.729-1.32-1.486-1.32h-2.24c-.757 0-1.396.567-1.486 1.317l-.239 1.88c-.478.155-.938.345-1.375.569l-1.494-1.161c-.604-.469-1.458-.415-1.979.122l-1.575 1.574c-.542.526-.597 1.38-.127 1.986l1.161 1.494c-.224.437-.414.897-.569 1.374l-1.877.239c-.753.09-1.32.729-1.32 1.486v2.24c0 .757.567 1.396 1.317 1.486l1.88.239c.155.477.346.937.569 1.374l-1.161 1.495c-.47.605-.415 1.459.122 1.979l1.575 1.575c.526.541 1.379.595 1.985.126l1.494-1.161c.437.224.897.415 1.374.569l.239 1.876c.09.755.729 1.322 1.486 1.322h2.24c.757 0 1.396-.567 1.486-1.317l.239-1.88c.477-.155.937-.346 1.374-.569l1.495 1.161c.605.47 1.459.415 1.979-.122l1.575-1.575c.542-.526.597-1.379.127-1.985l-1.161-1.494c.224-.437.415-.897.569-1.374l1.876-.239c.753-.09 1.32-.729 1.32-1.486v-2.24c.001-.757-.566-1.396-1.316-1.486zm-10.683 7.606c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"/></svg>
+                                    </button>
+                                    <button class="button-delete-offer button-offer">
+                                        <svg class="button-svg" id="Capa_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m442.154 145c10.585 0 17.924-10.701 13.955-20.514-14.093-34.841-48.275-59.486-88.109-59.486h-18.414c-6.867-36.273-38.67-65-77.586-65h-32c-38.891 0-70.715 28.708-77.586 65h-18.414c-39.834 0-74.016 24.645-88.109 59.486-3.969 9.813 3.37 20.514 13.955 20.514zm-202.154-115h32c21.9 0 40.49 14.734 46.748 35h-125.496c6.258-20.266 24.848-35 46.748-35z"/><path d="m111.053 470.196c1.669 23.442 21.386 41.804 44.886 41.804h200.121c23.5 0 43.217-18.362 44.886-41.804l21.023-295.196h-331.938zm185.966-214.945c.414-8.274 7.469-14.655 15.73-14.232 8.274.414 14.646 7.457 14.232 15.73l-8 160c-.401 8.019-7.029 14.251-14.969 14.251-8.637 0-15.42-7.223-14.994-15.749zm-97.768-14.232c8.263-.415 15.317 5.959 15.73 14.232l8 160c.426 8.53-6.362 15.749-14.994 15.749-7.94 0-14.568-6.232-14.969-14.251l-8-160c-.413-8.273 5.959-15.316 14.233-15.73z"/></g></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="description-offer">Description text
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat lectus ante, non dapibus sapien accumsan in. Integer vitae euismod erat, at aliquam lacus. Maecenas eu ligula tortor. Praesent ac luctus sapien. Suspendisse eget ipsum lacus. Aliquam venenatis urna vitae risus lacinia pulvinar. Suspendisse in mattis tortor, eget porttitor mauris.Phasellus eget eros tincidunt, elementum quam vitae, tincidunt tortor. Suspendisse non ante malesuada, viverra arcu vel, aliquet tortor. In tempor consequat augue, nec blandit augue ultricies condimentum. Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+                                </p>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="hashtags-offer">Hashtags: 
+                                    <span class="tag">Hashtag1</span>
+                                    <span class="tag">Hashtag2</span>
+                                    <span class="tag">Hashtag3</span>
+                                    <span class="tag">Hashtag4</span>
+                                    <span class="tag">Hashtag5</span>
+                                    <span class="tag">Hashtag6</span>
+                                    <span class="tag">Hashtag7</span>
+                                </p>
+                            </div>
+                            <div class="reviews-offer line-right-info">
+                                <p class="rewiew">Reviewer-name: 
+                                    <span class="review">Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-info-offer">
+                        <p class="rating">Rating <span class="rating-number">4.5</span>/5</p>
+                        <button class="add-comment comments-button">Add comment</button>
+                        <button class="more-comments comments-button">More comments</button>
+                    </div>
+                </article>
+                <article class="offer">
+                    <div class="top-info-offer">
+                        <div class="left-info-offer">
+                            <div class="image-and-percent">
+                                <img src="blank_image.png" class="image" alt="Offer photo">
+                                <p class="percent">15%</p>
+                            </div>
+                            <p class="date-expiration">Until 20.08.2021</p>
+                        </div>
+                        <div class="right-info-offer">
+                            <div class="centralized-line-right-info ">
+                                <h3 class="offer-label">label of an offer</h3>
+                                <p class="seller-name">Seller name</p>
+                                <a class="seller-link" href="#">Link for full info</a>
+                                <div class="buttons">
+                                    <button class="button-settings-offer button-offer">
+                                        <svg class="button-svg" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m22.683 9.394-1.88-.239c-.155-.477-.346-.937-.569-1.374l1.161-1.495c.47-.605.415-1.459-.122-1.979l-1.575-1.575c-.525-.542-1.379-.596-1.985-.127l-1.493 1.161c-.437-.223-.897-.414-1.375-.569l-.239-1.877c-.09-.753-.729-1.32-1.486-1.32h-2.24c-.757 0-1.396.567-1.486 1.317l-.239 1.88c-.478.155-.938.345-1.375.569l-1.494-1.161c-.604-.469-1.458-.415-1.979.122l-1.575 1.574c-.542.526-.597 1.38-.127 1.986l1.161 1.494c-.224.437-.414.897-.569 1.374l-1.877.239c-.753.09-1.32.729-1.32 1.486v2.24c0 .757.567 1.396 1.317 1.486l1.88.239c.155.477.346.937.569 1.374l-1.161 1.495c-.47.605-.415 1.459.122 1.979l1.575 1.575c.526.541 1.379.595 1.985.126l1.494-1.161c.437.224.897.415 1.374.569l.239 1.876c.09.755.729 1.322 1.486 1.322h2.24c.757 0 1.396-.567 1.486-1.317l.239-1.88c.477-.155.937-.346 1.374-.569l1.495 1.161c.605.47 1.459.415 1.979-.122l1.575-1.575c.542-.526.597-1.379.127-1.985l-1.161-1.494c.224-.437.415-.897.569-1.374l1.876-.239c.753-.09 1.32-.729 1.32-1.486v-2.24c.001-.757-.566-1.396-1.316-1.486zm-10.683 7.606c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"/></svg>
+                                    </button>
+                                    <button class="button-delete-offer button-offer">
+                                        <svg class="button-svg" id="Capa_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m442.154 145c10.585 0 17.924-10.701 13.955-20.514-14.093-34.841-48.275-59.486-88.109-59.486h-18.414c-6.867-36.273-38.67-65-77.586-65h-32c-38.891 0-70.715 28.708-77.586 65h-18.414c-39.834 0-74.016 24.645-88.109 59.486-3.969 9.813 3.37 20.514 13.955 20.514zm-202.154-115h32c21.9 0 40.49 14.734 46.748 35h-125.496c6.258-20.266 24.848-35 46.748-35z"/><path d="m111.053 470.196c1.669 23.442 21.386 41.804 44.886 41.804h200.121c23.5 0 43.217-18.362 44.886-41.804l21.023-295.196h-331.938zm185.966-214.945c.414-8.274 7.469-14.655 15.73-14.232 8.274.414 14.646 7.457 14.232 15.73l-8 160c-.401 8.019-7.029 14.251-14.969 14.251-8.637 0-15.42-7.223-14.994-15.749zm-97.768-14.232c8.263-.415 15.317 5.959 15.73 14.232l8 160c.426 8.53-6.362 15.749-14.994 15.749-7.94 0-14.568-6.232-14.969-14.251l-8-160c-.413-8.273 5.959-15.316 14.233-15.73z"/></g></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="description-offer">Description text
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat lectus ante, non dapibus sapien accumsan in. Integer vitae euismod erat, at aliquam lacus. Maecenas eu ligula tortor. Praesent ac luctus sapien. Suspendisse eget ipsum lacus. Aliquam venenatis urna vitae risus lacinia pulvinar. Suspendisse in mattis tortor, eget porttitor mauris.Phasellus eget eros tincidunt, elementum quam vitae, tincidunt tortor. Suspendisse non ante malesuada, viverra arcu vel, aliquet tortor. In tempor consequat augue, nec blandit augue ultricies condimentum. Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+                                </p>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="hashtags-offer">Hashtags: 
+                                    <span class="tag">Hashtag1</span>
+                                    <span class="tag">Hashtag2</span>
+                                    <span class="tag">Hashtag3</span>
+                                    <span class="tag">Hashtag4</span>
+                                    <span class="tag">Hashtag5</span>
+                                    <span class="tag">Hashtag6</span>
+                                    <span class="tag">Hashtag7</span>
+                                </p>
+                            </div>
+                            <div class="reviews-offer line-right-info">
+                                <p class="rewiew">Reviewer-name: 
+                                    <span class="review">Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-info-offer">
+                        <p class="rating">Rating <span class="rating-number">4.5</span>/5</p>
+                        <button class="add-comment comments-button">Add comment</button>
+                        <button class="more-comments comments-button">More comments</button>
+                    </div>
+                </article>
+                <article class="offer">
+                    <div class="top-info-offer">
+                        <div class="left-info-offer">
+                            <div class="image-and-percent">
+                                <img src="blank_image.png" class="image" alt="Offer photo">
+                                <p class="percent">15%</p>
+                            </div>
+                            <p class="date-expiration">Until 20.08.2021</p>
+                        </div>
+                        <div class="right-info-offer">
+                            <div class="centralized-line-right-info ">
+                                <h3 class="offer-label">label of an offer</h3>
+                                <p class="seller-name">Seller name</p>
+                                <a class="seller-link" href="#">Link for full info</a>
+                                <div class="buttons">
+                                    <button class="button-settings-offer button-offer">
+                                        <svg class="button-svg" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m22.683 9.394-1.88-.239c-.155-.477-.346-.937-.569-1.374l1.161-1.495c.47-.605.415-1.459-.122-1.979l-1.575-1.575c-.525-.542-1.379-.596-1.985-.127l-1.493 1.161c-.437-.223-.897-.414-1.375-.569l-.239-1.877c-.09-.753-.729-1.32-1.486-1.32h-2.24c-.757 0-1.396.567-1.486 1.317l-.239 1.88c-.478.155-.938.345-1.375.569l-1.494-1.161c-.604-.469-1.458-.415-1.979.122l-1.575 1.574c-.542.526-.597 1.38-.127 1.986l1.161 1.494c-.224.437-.414.897-.569 1.374l-1.877.239c-.753.09-1.32.729-1.32 1.486v2.24c0 .757.567 1.396 1.317 1.486l1.88.239c.155.477.346.937.569 1.374l-1.161 1.495c-.47.605-.415 1.459.122 1.979l1.575 1.575c.526.541 1.379.595 1.985.126l1.494-1.161c.437.224.897.415 1.374.569l.239 1.876c.09.755.729 1.322 1.486 1.322h2.24c.757 0 1.396-.567 1.486-1.317l.239-1.88c.477-.155.937-.346 1.374-.569l1.495 1.161c.605.47 1.459.415 1.979-.122l1.575-1.575c.542-.526.597-1.379.127-1.985l-1.161-1.494c.224-.437.415-.897.569-1.374l1.876-.239c.753-.09 1.32-.729 1.32-1.486v-2.24c.001-.757-.566-1.396-1.316-1.486zm-10.683 7.606c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"/></svg>
+                                    </button>
+                                    <button class="button-delete-offer button-offer">
+                                        <svg class="button-svg" id="Capa_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m442.154 145c10.585 0 17.924-10.701 13.955-20.514-14.093-34.841-48.275-59.486-88.109-59.486h-18.414c-6.867-36.273-38.67-65-77.586-65h-32c-38.891 0-70.715 28.708-77.586 65h-18.414c-39.834 0-74.016 24.645-88.109 59.486-3.969 9.813 3.37 20.514 13.955 20.514zm-202.154-115h32c21.9 0 40.49 14.734 46.748 35h-125.496c6.258-20.266 24.848-35 46.748-35z"/><path d="m111.053 470.196c1.669 23.442 21.386 41.804 44.886 41.804h200.121c23.5 0 43.217-18.362 44.886-41.804l21.023-295.196h-331.938zm185.966-214.945c.414-8.274 7.469-14.655 15.73-14.232 8.274.414 14.646 7.457 14.232 15.73l-8 160c-.401 8.019-7.029 14.251-14.969 14.251-8.637 0-15.42-7.223-14.994-15.749zm-97.768-14.232c8.263-.415 15.317 5.959 15.73 14.232l8 160c.426 8.53-6.362 15.749-14.994 15.749-7.94 0-14.568-6.232-14.969-14.251l-8-160c-.413-8.273 5.959-15.316 14.233-15.73z"/></g></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="description-offer">Description text
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat lectus ante, non dapibus sapien accumsan in. Integer vitae euismod erat, at aliquam lacus. Maecenas eu ligula tortor. Praesent ac luctus sapien. Suspendisse eget ipsum lacus. Aliquam venenatis urna vitae risus lacinia pulvinar. Suspendisse in mattis tortor, eget porttitor mauris.Phasellus eget eros tincidunt, elementum quam vitae, tincidunt tortor. Suspendisse non ante malesuada, viverra arcu vel, aliquet tortor. In tempor consequat augue, nec blandit augue ultricies condimentum. Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+                                </p>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="hashtags-offer">Hashtags: 
+                                    <span class="tag">Hashtag1</span>
+                                    <span class="tag">Hashtag2</span>
+                                    <span class="tag">Hashtag3</span>
+                                    <span class="tag">Hashtag4</span>
+                                    <span class="tag">Hashtag5</span>
+                                    <span class="tag">Hashtag6</span>
+                                    <span class="tag">Hashtag7</span>
+                                </p>
+                            </div>
+                            <div class="reviews-offer line-right-info">
+                                <p class="rewiew">Reviewer-name: 
+                                    <span class="review">Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-info-offer">
+                        <p class="rating">Rating <span class="rating-number">4.5</span>/5</p>
+                        <button class="add-comment comments-button">Add comment</button>
+                        <button class="more-comments comments-button">More comments</button>
+                    </div>
+                </article>
+                <article class="offer">
+                    <div class="top-info-offer">
+                        <div class="left-info-offer">
+                            <div class="image-and-percent">
+                                <img src="blank_image.png" class="image" alt="Offer photo">
+                                <p class="percent">15%</p>
+                            </div>
+                            <p class="date-expiration">Until 20.08.2021</p>
+                        </div>
+                        <div class="right-info-offer">
+                            <div class="centralized-line-right-info ">
+                                <h3 class="offer-label">label of an offer</h3>
+                                <p class="seller-name">Seller name</p>
+                                <a class="seller-link" href="#">Link for full info</a>
+                                <div class="buttons">
+                                    <button class="button-settings-offer button-offer">
+                                        <svg class="button-svg" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m22.683 9.394-1.88-.239c-.155-.477-.346-.937-.569-1.374l1.161-1.495c.47-.605.415-1.459-.122-1.979l-1.575-1.575c-.525-.542-1.379-.596-1.985-.127l-1.493 1.161c-.437-.223-.897-.414-1.375-.569l-.239-1.877c-.09-.753-.729-1.32-1.486-1.32h-2.24c-.757 0-1.396.567-1.486 1.317l-.239 1.88c-.478.155-.938.345-1.375.569l-1.494-1.161c-.604-.469-1.458-.415-1.979.122l-1.575 1.574c-.542.526-.597 1.38-.127 1.986l1.161 1.494c-.224.437-.414.897-.569 1.374l-1.877.239c-.753.09-1.32.729-1.32 1.486v2.24c0 .757.567 1.396 1.317 1.486l1.88.239c.155.477.346.937.569 1.374l-1.161 1.495c-.47.605-.415 1.459.122 1.979l1.575 1.575c.526.541 1.379.595 1.985.126l1.494-1.161c.437.224.897.415 1.374.569l.239 1.876c.09.755.729 1.322 1.486 1.322h2.24c.757 0 1.396-.567 1.486-1.317l.239-1.88c.477-.155.937-.346 1.374-.569l1.495 1.161c.605.47 1.459.415 1.979-.122l1.575-1.575c.542-.526.597-1.379.127-1.985l-1.161-1.494c.224-.437.415-.897.569-1.374l1.876-.239c.753-.09 1.32-.729 1.32-1.486v-2.24c.001-.757-.566-1.396-1.316-1.486zm-10.683 7.606c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"/></svg>
+                                    </button>
+                                    <button class="button-delete-offer button-offer">
+                                        <svg class="button-svg" id="Capa_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m442.154 145c10.585 0 17.924-10.701 13.955-20.514-14.093-34.841-48.275-59.486-88.109-59.486h-18.414c-6.867-36.273-38.67-65-77.586-65h-32c-38.891 0-70.715 28.708-77.586 65h-18.414c-39.834 0-74.016 24.645-88.109 59.486-3.969 9.813 3.37 20.514 13.955 20.514zm-202.154-115h32c21.9 0 40.49 14.734 46.748 35h-125.496c6.258-20.266 24.848-35 46.748-35z"/><path d="m111.053 470.196c1.669 23.442 21.386 41.804 44.886 41.804h200.121c23.5 0 43.217-18.362 44.886-41.804l21.023-295.196h-331.938zm185.966-214.945c.414-8.274 7.469-14.655 15.73-14.232 8.274.414 14.646 7.457 14.232 15.73l-8 160c-.401 8.019-7.029 14.251-14.969 14.251-8.637 0-15.42-7.223-14.994-15.749zm-97.768-14.232c8.263-.415 15.317 5.959 15.73 14.232l8 160c.426 8.53-6.362 15.749-14.994 15.749-7.94 0-14.568-6.232-14.969-14.251l-8-160c-.413-8.273 5.959-15.316 14.233-15.73z"/></g></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="description-offer">Description text
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat lectus ante, non dapibus sapien accumsan in. Integer vitae euismod erat, at aliquam lacus. Maecenas eu ligula tortor. Praesent ac luctus sapien. Suspendisse eget ipsum lacus. Aliquam venenatis urna vitae risus lacinia pulvinar. Suspendisse in mattis tortor, eget porttitor mauris.Phasellus eget eros tincidunt, elementum quam vitae, tincidunt tortor. Suspendisse non ante malesuada, viverra arcu vel, aliquet tortor. In tempor consequat augue, nec blandit augue ultricies condimentum. Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+                                </p>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="hashtags-offer">Hashtags: 
+                                    <span class="tag">Hashtag1</span>
+                                    <span class="tag">Hashtag2</span>
+                                    <span class="tag">Hashtag3</span>
+                                    <span class="tag">Hashtag4</span>
+                                    <span class="tag">Hashtag5</span>
+                                    <span class="tag">Hashtag6</span>
+                                    <span class="tag">Hashtag7</span>
+                                </p>
+                            </div>
+                            <div class="reviews-offer line-right-info">
+                                <p class="rewiew">Reviewer-name: 
+                                    <span class="review">Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-info-offer">
+                        <p class="rating">Rating <span class="rating-number">4.5</span>/5</p>
+                        <button class="add-comment comments-button">Add comment</button>
+                        <button class="more-comments comments-button">More comments</button>
+                    </div>
+                </article>
+                <article class="offer">
+                    <div class="top-info-offer">
+                        <div class="left-info-offer">
+                            <div class="image-and-percent">
+                                <img src="blank_image.png" class="image" alt="Offer photo">
+                                <p class="percent">15%</p>
+                            </div>
+                            <p class="date-expiration">Until 20.08.2021</p>
+                        </div>
+                        <div class="right-info-offer">
+                            <div class="centralized-line-right-info ">
+                                <h3 class="offer-label">label of an offer</h3>
+                                <p class="seller-name">Seller name</p>
+                                <a class="seller-link" href="#">Link for full info</a>
+                                <div class="buttons">
+                                    <button class="button-settings-offer button-offer">
+                                        <svg class="button-svg" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m22.683 9.394-1.88-.239c-.155-.477-.346-.937-.569-1.374l1.161-1.495c.47-.605.415-1.459-.122-1.979l-1.575-1.575c-.525-.542-1.379-.596-1.985-.127l-1.493 1.161c-.437-.223-.897-.414-1.375-.569l-.239-1.877c-.09-.753-.729-1.32-1.486-1.32h-2.24c-.757 0-1.396.567-1.486 1.317l-.239 1.88c-.478.155-.938.345-1.375.569l-1.494-1.161c-.604-.469-1.458-.415-1.979.122l-1.575 1.574c-.542.526-.597 1.38-.127 1.986l1.161 1.494c-.224.437-.414.897-.569 1.374l-1.877.239c-.753.09-1.32.729-1.32 1.486v2.24c0 .757.567 1.396 1.317 1.486l1.88.239c.155.477.346.937.569 1.374l-1.161 1.495c-.47.605-.415 1.459.122 1.979l1.575 1.575c.526.541 1.379.595 1.985.126l1.494-1.161c.437.224.897.415 1.374.569l.239 1.876c.09.755.729 1.322 1.486 1.322h2.24c.757 0 1.396-.567 1.486-1.317l.239-1.88c.477-.155.937-.346 1.374-.569l1.495 1.161c.605.47 1.459.415 1.979-.122l1.575-1.575c.542-.526.597-1.379.127-1.985l-1.161-1.494c.224-.437.415-.897.569-1.374l1.876-.239c.753-.09 1.32-.729 1.32-1.486v-2.24c.001-.757-.566-1.396-1.316-1.486zm-10.683 7.606c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"/></svg>
+                                    </button>
+                                    <button class="button-delete-offer button-offer">
+                                        <svg class="button-svg" id="Capa_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m442.154 145c10.585 0 17.924-10.701 13.955-20.514-14.093-34.841-48.275-59.486-88.109-59.486h-18.414c-6.867-36.273-38.67-65-77.586-65h-32c-38.891 0-70.715 28.708-77.586 65h-18.414c-39.834 0-74.016 24.645-88.109 59.486-3.969 9.813 3.37 20.514 13.955 20.514zm-202.154-115h32c21.9 0 40.49 14.734 46.748 35h-125.496c6.258-20.266 24.848-35 46.748-35z"/><path d="m111.053 470.196c1.669 23.442 21.386 41.804 44.886 41.804h200.121c23.5 0 43.217-18.362 44.886-41.804l21.023-295.196h-331.938zm185.966-214.945c.414-8.274 7.469-14.655 15.73-14.232 8.274.414 14.646 7.457 14.232 15.73l-8 160c-.401 8.019-7.029 14.251-14.969 14.251-8.637 0-15.42-7.223-14.994-15.749zm-97.768-14.232c8.263-.415 15.317 5.959 15.73 14.232l8 160c.426 8.53-6.362 15.749-14.994 15.749-7.94 0-14.568-6.232-14.969-14.251l-8-160c-.413-8.273 5.959-15.316 14.233-15.73z"/></g></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="description-offer">Description text
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat lectus ante, non dapibus sapien accumsan in. Integer vitae euismod erat, at aliquam lacus. Maecenas eu ligula tortor. Praesent ac luctus sapien. Suspendisse eget ipsum lacus. Aliquam venenatis urna vitae risus lacinia pulvinar. Suspendisse in mattis tortor, eget porttitor mauris.Phasellus eget eros tincidunt, elementum quam vitae, tincidunt tortor. Suspendisse non ante malesuada, viverra arcu vel, aliquet tortor. In tempor consequat augue, nec blandit augue ultricies condimentum. Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+                                </p>
+                            </div>
+                            <div class="line-right-info">
+                                <p class="hashtags-offer">Hashtags: 
+                                    <span class="tag">Hashtag1</span>
+                                    <span class="tag">Hashtag2</span>
+                                    <span class="tag">Hashtag3</span>
+                                    <span class="tag">Hashtag4</span>
+                                    <span class="tag">Hashtag5</span>
+                                    <span class="tag">Hashtag6</span>
+                                    <span class="tag">Hashtag7</span>
+                                </p>
+                            </div>
+                            <div class="reviews-offer line-right-info">
+                                <p class="rewiew">Reviewer-name: 
+                                    <span class="review">Nullam at lacinia diam. Donec tempus blandit ligula ac ultrices. Integer eget venenatis mi. Curabitur suscipit nunc vitae nisi vestibulum, quis fermentum ligula interdum. Donec hendrerit nisi vel ipsum vestibulum vestibulum. Maecenas et eros sed felis volutpat imperdiet id in mi. Nullam sagittis commodo ante, eget tempus magna aliquet ac. In consequat risus a lorem vulputate, non auctor turpis semper. Interdum et malesuada fames ac ante ipsum primis in faucibus</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-info-offer">
+                        <p class="rating">Rating <span class="rating-number">4.5</span>/5</p>
+                        <button class="add-comment comments-button">Add comment</button>
+                        <button class="more-comments comments-button">More comments</button>
+                    </div>
+                </article>
+                    <Button class="button-load-more">
+                        Load more
+                    </Button>
+            </main>
+
+            <footer class="footer">
+                <p class="information">Profit!<br>
+                    Pavel Klapatsiuk<br>            
+                    2 course, 6 group<br>                    
+                    klopotuk@gmail.com<br>                    
+                    18.02.2021</p>
+            </footer>
+        </body>
+    </html>

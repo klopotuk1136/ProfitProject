@@ -8,8 +8,13 @@ public class GetNameServlet extends HttpServlet {
         response.setContentType("text/html");
         String name = request.getParameter("name");
         PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.printf("<h1> Name is %s</h1>%n", name);
-        out.println("</body></html>");
+
+        if(name.length() < 100) {
+            out.println("<html><body>");
+            out.printf("<h1> Name is %s</h1>%n", name);
+            out.println("</body></html>");
+        }else{
+            throw new IOException("Name is too long");
+        }
     }
 }

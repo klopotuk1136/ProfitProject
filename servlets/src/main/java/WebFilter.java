@@ -14,12 +14,10 @@ public class WebFilter implements Filter {
 
         long startTime = System.currentTimeMillis();
         chain.doFilter(request, response);
-        long elapsed = System.currentTimeMillis() - startTime;
+        long timeTaken = System.currentTimeMillis() - startTime;
+        String method = ((HttpServletRequest)request).getMethod();
+        String url = ((HttpServletRequest)request).getRequestURL().toString();
 
-        StringBuilder log = new StringBuilder();
-        log.append(((HttpServletRequest)request).getMethod()).append(" - ");
-        log.append(((HttpServletRequest) request).getRequestURL()).append(" - ");
-        log.append(elapsed).append("ms");
-        System.out.println(log);
+        System.out.printf("%s - %s - %dms%n",method, url, timeTaken);
     }
 }

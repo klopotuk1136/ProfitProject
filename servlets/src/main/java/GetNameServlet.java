@@ -9,11 +9,11 @@ public class GetNameServlet extends HttpServlet {
         String name = request.getParameter("name");
         PrintWriter out = response.getWriter();
 
-        if(name.length() < 100) {
+        if (name.length() < 100) {
             out.println("<html><body>");
             out.printf("<h1> Name is %s</h1>%n", name);
             out.println("</body></html>");
-        }else{
+        } else {
             throw new IOException("Name is too long");
         }
     }

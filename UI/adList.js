@@ -274,9 +274,9 @@ function getAds(skip = 0, top = 10, filterConfig = undefined){
     
         for (let parameter in filterConfig){
             if (parameter === 'hashTags'){
-                for (let i = 0; i < filterConfig.hashTags.length; i++){
-                    returningAds = returningAds.filter(ad => ad.hashTags.includes(filterConfig.hashTags[i]));
-                }
+                filterConfig.hashTags.forEach(tag => {
+                    returningAds = returningAds.filter(ad => ad.hashTags.includes(tag));
+                });
             }
             if (parameter === 'dateFrom'){
                 returningAds = returningAds.filter(ad => ad.createdAt >= filterConfig.dateFrom);
@@ -296,24 +296,14 @@ function getAds(skip = 0, top = 10, filterConfig = undefined){
 }
 
 function comparator(first, second){
-    if (first.createdAt < second.createdAt){
-        return 1;
-    }
-    else if (first.createdAt > second.createdAt){
-        return -1;
-    }
-    else{
-        return 0;
-    }
+    return second - first;
 }
 
 function getAd(id){
     if (typeof id === 'string'){
         return adList.find(ad => ad.id === id)
     }
-    else {
-        console.log('Incorrect type of id. Id must be a string.');
-    }
+    console.log('Incorrect type of id. Id must be a string.');
 }
 
 function validateAd(ad){
@@ -336,7 +326,7 @@ function validateAd(ad){
                 }
                 break;
             case 'createdAt':
-                if (Object.prototype.toString.call(ad.createdAt) !== '[object Date]') {
+                if (!ad.createdAt instanceof Date) {
                     return false;
                 }
                 break;
@@ -351,7 +341,7 @@ function validateAd(ad){
                 }
                 break;
             case 'photoLink':
-                if (typeof ad.photoLink !== 'string' || ad.photoLink.length === 0) {
+                if (ad.photoLink && (typeof ad.photoLink !== 'string' || ad.photoLink.length === 0)) {
                     return false;
                 }
                 break;
@@ -368,7 +358,7 @@ function validateAd(ad){
                 }
                 break;
             case 'validUntil':
-                if (Object.prototype.toString.call(ad.validUntil) !== '[object Date]') {
+                if (!ad.validUntil instanceof Date) {
                     return false;
                 }
                 break;
@@ -378,7 +368,7 @@ function validateAd(ad){
                 }
                 break;
             case 'reviews':
-                if (Object.prototype.toString.call(ad.reviews) !== '[object Array]') {
+                if (!Array.isArray(ad.reviews)) {
                     return false;
                 }
                 break;
@@ -399,25 +389,28 @@ function addAd(ad){
 
 function editAd(id, ad){
     for (let param in ad){
-        if (param === 'id' || param === 'vendor' || param === 'createdAt' || param === 'likes'){
-            console.log("You can't change id, vendor, createdAt and likes");
+        if (param === 'id' || param === 'vendor' || param === 'createdAt'){
+            console.log("You can't change id, vendor, createdAt");
             return false;
         }
     }
+    
+    var tmpAd = {};
+    Object.assign(tmpAd, getAd(id));
 
-    var tmpAd = {
-        id: '20',
-        description : 'Скидка на столы - до 89%',
-        createdAt : new Date('2021-01-29T20:12:32'),
-        link : 'https://coolTables.ua',
-        vendor : 'Table service',
-        photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-        hashTags : ['Table', 'furniture', 'wood'] ,
-        discount : '89',
-        validUntil : new Date('2022-01-21T20:12:32'),
-        rating : 4,
-        reviews : ['Эти столы прекрасны!'] ,
-    };
+    // var tmpAd = {
+    //     id: '20',
+    //     description : 'Скидка на столы - до 89%',
+    //     createdAt : new Date('2021-01-29T20:12:32'),
+    //     link : 'https://coolTables.ua',
+    //     vendor : 'Table service',
+    //     photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
+    //     hashTags : ['Table', 'furniture', 'wood'] ,
+    //     discount : '89',
+    //     validUntil : new Date('2022-01-21T20:12:32'),
+    //     rating : 4,
+    //     reviews : ['Эти столы прекрасны!'] ,
+    // };
     
     for (let param in ad){
         tmpAd[param] = ad[param];

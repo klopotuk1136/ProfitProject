@@ -1,0 +1,17 @@
+{
+  "name": "eslint.json",
+  "version": "1.0.0",
+  "description": "List of ads",
+  "main": "adList.js",
+  "dependencies": {
+    "eslint": "^7.23.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pavel Klapatsiuk",
+  "license": "ISC"
+}

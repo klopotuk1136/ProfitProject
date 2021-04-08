@@ -3,3 +3,6 @@
 .idea/
 out/
 servlets/target/
+UI/node_modules/
+ProfitApp/target/
+*.class

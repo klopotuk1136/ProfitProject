@@ -37,7 +37,7 @@ class AdsList{
     }
 
     _comparator(first, second){
-        return second - first;
+        return second.createdAt - first.createdAt;
     }
 
     get(id){

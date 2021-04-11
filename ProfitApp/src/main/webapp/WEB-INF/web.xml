@@ -58,6 +58,14 @@
         <url-pattern>/test2</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AdsServlet</servlet-name>
+        <servlet-class>AdsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdsServlet</servlet-name>
+        <url-pattern>/ads/*</url-pattern>
+    </servlet-mapping>
     <filter>
         <filter-name>WebFilter</filter-name>
         <filter-class>WebFilter</filter-class>

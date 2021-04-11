@@ -646,4 +646,4 @@ console.log(ads.get('24'));
 
 console.log("Удалим все элементы из массива:");
 ads.clear();
-console.log(ads.getPage());
+console.log(ads.getPage());99

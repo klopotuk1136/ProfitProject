@@ -1,37 +1,40 @@
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AdList {
     private List<Ad> ads;
-    public AdList(){
+
+    public AdList() {
         ads = new ArrayList<>();
         List<String> hashTags = new ArrayList<>();
         hashTags.add("tag1");
         hashTags.add("tag2");
-        try {
-            add(new Ad("1", "desc", "2021-01-29 20:12:32", "link1", "vend", "photo", hashTags, "12", "2022-01-21 20:12:32", 2, hashTags));
-        }catch(ParseException e){
-
-        }
+        add(new Ad("1", "desc", "2021-01-29", "link1", "vend",
+                "photo", hashTags, "12", "2022-01-21", 2, hashTags));
     }
-    public static boolean validateAd(Ad ad){
+
+    public static boolean validateAd(Ad ad) {
         return ad.getId() != null && ad.getId().length() >= 1 &&
                 ad.getDescription() != null && ad.getDescription().length() <= 200 && ad.getDescription().length() >= 1 &&
-                ad.getCreatedAt() != null &&
+                ad.getCreatedAt() != null && ad.getCreatedAt().length() >= 1 &&
                 ad.getLink() != null && ad.getLink().length() >= 1 &&
                 ad.getVendor() != null && ad.getVendor().length() >= 1 &&
                 ad.getHashTags() != null && ad.getHashTags().size() >= 1 && ad.getHashTags().size() <= 7 &&
                 ad.getDiscount() != null && ad.getDiscount().length() >= 1 &&
                 ad.getReviews() != null;
     }
-    public boolean add(Ad ad){
+
+    public boolean add(Ad ad) {
         if (AdList.validateAd(ad)) {
             return ads.add(ad);
         }
         return false;
     }
-    public Ad getAd(String id){
+
+    public Ad getAd(String id) {
         for (Ad ad : ads) {
             if (ad.getId().equals(id)) {
                 return ad;
@@ -39,7 +42,8 @@ public class AdList {
         }
         return null;
     }
-    public boolean editAd(String id, Ad ad){
+
+    public boolean editAd(String id, Ad ad) {
         Ad editingAd = getAd(id);
         if (editingAd == null) {
             return false;
@@ -75,14 +79,44 @@ public class AdList {
         }
         return true;
     }
-    public boolean removeAd(String id){
+
+    public boolean removeAd(String id) {
         Ad adToRemove = getAd(id);
         if (adToRemove == null) {
             return false;
         }
         return ads.remove(adToRemove);
     }
-    public List<Ad> getAllAds(){
-        return ads;
+
+    public List<Ad> getPage(int start, int top, AdFilter filter) {
+        List<Ad> filteredAds = new ArrayList<>(ads);
+
+        Stream<Ad> stream = filteredAds.stream();
+        if (filter.getVendor().length() != 0){
+            stream = stream.filter(ad -> ad.getVendor().equals(filter.getVendor()));
+        }
+        if (filter.getDateUntil().length() != 0){
+            stream = stream.filter(ad -> ad.getValidUntil().equals(filter.getDateUntil()));
+        }
+        if(filter.getHashTags().size() != 0) {
+            stream = stream.filter(ad -> ad.getHashTags().containsAll(filter.getHashTags()));
+        }
+        filteredAds = stream.sorted((ad1, ad2) -> {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        Date date1 = sdf.parse(ad1.getCreatedAt());
+                        Date date2 = sdf.parse(ad1.getCreatedAt());
+                        return date1.compareTo(date2);
+
+                    } catch (ParseException e) {
+                        System.out.println(e.getStackTrace());
+                        return 0;
+                    }
+                }
+        ).collect(Collectors.toList());
+        if(start + top > filteredAds.size()){
+            return filteredAds;
+        }
+        return filteredAds.subList(start, start + top);
     }
 }

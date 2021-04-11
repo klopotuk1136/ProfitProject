@@ -19,40 +19,33 @@ public class AdsServlet extends HttpServlet {
         if (uris.length == 3){
             switch (uris[2]){
                 case "search": {
-                    response.getWriter().print((new Gson()).toJson(adList.getAllAds()));
+                    int start = (request.getParameter("start") != null) ? Integer.parseInt(request.getParameter("start")) : 0;
+                    int top = (request.getParameter("top") != null) ? Integer.parseInt(request.getParameter("top")) : 10;
+                    String line = request.getReader().readLine();
+                    adList.getPage(start, top, (new Gson()).fromJson(line, AdFilter.class)).forEach(ad -> System.out.println(ad));
+                    response.getWriter().print((new Gson()).toJson(adList.getPage(start, top, (new Gson()).fromJson(line, AdFilter.class))));
                     break;
                 }
                 case "add": {
-                    GsonBuilder builder = new GsonBuilder();
-                    Gson gson = builder.create();
-
-                    String line = request.getReader().readLine();
-                    System.out.println(line);
-                    Ad tmpAd = (gson).fromJson(line, Ad.class);
-                    System.out.println(tmpAd);
-                    response.getWriter().print((gson).toJson(adList.add((gson).fromJson(line, Ad.class))));
+                    response.getWriter().print((new Gson()).toJson(adList.add((new Gson()).fromJson(request.getReader().readLine(), Ad.class))));
                     break;
                 }
                 case "edit": {
-                    Ad tmpAd = adList.getAd(request.getParameter("id"));
-
+                    response.getWriter().print((new Gson()).toJson(adList.editAd(request.getParameter("id"),
+                            (new Gson()).fromJson(request.getReader().readLine(), Ad.class))));
                     break;
                 }
             }
         }
-
-        System.out.println((new Gson()).toJson(adList.getAllAds()));
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
         response.getWriter().print((new Gson()).toJson(adList.getAd(request.getParameter("id"))));
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
         response.getWriter().print((new Gson()).toJson(adList.removeAd(request.getParameter("id"))));
     }
 }

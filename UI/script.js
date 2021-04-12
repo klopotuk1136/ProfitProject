@@ -1,79 +1,265 @@
-class View{
-
+class AdsList{
+    _adList = [];
     constructor(adList){
-        this.ads = new AdsList(adList);
+        this._adList = adList.concat();
     }
 
+    getPage(skip = 0, top = 10, filterConfig = undefined){
+        if (typeof skip !== 'number' || typeof top !== 'number') {
+            console.log('Error with inputting types!');
+            return;
+        }
+    
+        let returningAds = this._adList;
+        if (filterConfig){
+        
+            for (let parameter in filterConfig){
+                if (parameter === 'hashTags'){
+                    filterConfig.hashTags.forEach(tag => {
+                        returningAds = returningAds.filter(ad => ad.hashTags.includes(tag));
+                    });
+                }
+                if (parameter === 'dateFrom'){
+                    returningAds = returningAds.filter(ad => ad.createdAt >= filterConfig.dateFrom);
+                }
+                else if (parameter === 'dateTo'){
+                    returningAds = returningAds.filter(ad => ad.createdAt < filterConfig.dateTo);
+                }
+                else if (parameter === 'vendor'){
+                    returningAds = returningAds.filter(ad => ad.vendor === filterConfig.vendor);
+                }
+            }
+        }
+            
+        returningAds.sort(this._comparator);
+        return returningAds.slice(skip, skip + top);
+    
+    }
+
+    _comparator(first, second){
+        return second.createdAt - first.createdAt;
+    }
+
+    get(id){
+        if (typeof id === 'string'){
+            return this._adList.find(ad => ad.id === id)
+        }
+        console.log('Incorrect type of id. Id must be a string.');
+    }
+
+    static validate(ad){
+        let requiredParams = ['id','label', 'description', 'createdAt', 'link', 'vendor', 'hashTags', 'discount', 'validUntil'];
+        for (let i = 0; i < requiredParams.length; i++) {
+            if (ad[requiredParams[i]] === undefined) {
+                return false;
+            }
+        }
+        for (let param in ad){
+            switch (param) {
+                case 'id':
+                    if (typeof ad.id !== 'string' || ad.id.length === 0) {
+                        return false;
+                    }
+                    break;
+                case 'label':
+                    if (typeof ad.label !== 'string' || ad.label.length === 0){
+                        return false;
+                    }
+                    break;
+                case 'description':
+                    if (typeof ad.description !== 'string' || ad.description.length >= 200 || ad.description.length === 0) {
+                        return false;
+                    }
+                    break;
+                case 'createdAt':
+                    if (!(ad.createdAt instanceof Date)) {
+                        return false;
+                    }
+                    break;
+                case 'link':
+                    if (typeof ad.link !== 'string' || ad.link.length === 0) {
+                        return false;
+                    }
+                    break;
+                case 'vendor':
+                    if (typeof ad.vendor !== 'string' || ad.vendor.length === 0) {
+                        return false;
+                    }
+                    break;
+                case 'photoLink':
+                    if (ad.photoLink && (typeof ad.photoLink !== 'string' || ad.photoLink.length === 0)) {
+                        return false;
+                    }
+                    break;
+                case 'hashTags':
+                    if (ad.hashTags){
+                        if (!ad.hashTags.every(hashtag => typeof hashtag === 'string')){
+                            return false;
+                        }
+                    }
+                    break;
+                case 'discount':
+                    if (typeof ad.discount !== 'string' || ad.discount.length === 0) {
+                        return false;
+                    }
+                    break;
+                case 'validUntil':
+                    if (!(ad.validUntil instanceof Date)) {
+                        return false;
+                    }
+                    break;
+                case 'rating':
+                    if (!(typeof ad.rating === 'undefined' || typeof ad.rating === 'number')){
+                        return false;
+                    }
+                    break;
+                case 'reviews':
+                    if (!Array.isArray(ad.reviews)) {
+                        return false;
+                    }
+                    break;
+                default:
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    add(ad){
+        if (AdsList.validate(ad)) {
+            this._adList.push(ad);
+            return true;
+        }
+        return false;
+    }
+
+    remove(id){
+        if (typeof id === 'string'){
+            let index = this._adList.findIndex(ad => ad.id === id);
+            if (index !== -1){
+                this._adList.splice(index, 1);
+    
+                return true;
+            }
+        }
+        return false;
+    }
+
+    edit(id, ad){
+        for (let param in ad){
+            if (param === 'id' || param === 'vendor' || param === 'createdAt'){
+                console.log("You can't change id, vendor, createdAt");
+                return false;
+            }
+        }
+        
+        var tmpAd = {};
+        Object.assign(tmpAd, this.get(id));
+        
+        for (let param in ad){
+            tmpAd[param] = ad[param];
+        }
+    
+        if (!AdsList.validate(tmpAd)){
+            return false;
+        }
+        
+        this.remove(id);
+        this.add(tmpAd);
+
+        return true;
+    }
+
+    addAll(adList){
+        return adList.filter(ad => !this.add(ad));
+    }
+    
+    clear(){
+        this._adList.splice(0, this._adList.length);
+    }
+}
+
+class View{
+    _ads;
+    _tmpAd;
+    _username;
+    _isVendor;
+    constructor(adList, username, isVendor){
+        this._ads = new AdsList(adList);
+        this._tmpAd = document.querySelector(".offer-tmp");
+        this._username = username;
+        this._isVendor = isVendor;
+    }
+    showUser(){
+        if(this._username == null || this._username.length == 0){
+            document.querySelector(".profile").textContent = "Log in";
+            document.querySelector(".log-out").style.visibility = "hidden";
+        }
+        else {
+            document.querySelector(".profile").textContent = this._username;
+            document.querySelector(".log-out").style.visibility = "visible";
+        }
+    }
     _getOffer(ad){
-        var tags = "";
+        let template = document.importNode(this._tmpAd, true);
+        template.querySelector(".image-in-offer").setAttribute('src', ad.photoLink);
+        template.querySelector(".percent").textContent = ad.discount + "%";
+        template.querySelector(".date-expiration").textContent = ad.validUntil.getFullYear() + " " + (ad.validUntil.getMonth() + 1) + " " + ad.validUntil.getDate();
+        template.querySelector(".offer-label").textContent = ad.label;
+        template.querySelector(".seller-name").textContent = ad.vendor;
+        template.querySelector(".seller-link").setAttribute("href", ad.link);
+        if(this._username == null || this._username.length == 0){
+            template.querySelectorAll(".button-offer").forEach(button => button.style.visibility = "hidden");
+            template.querySelector(".add-comment").style.visibility = "hidden";
+        }
+        else if (this._isVendor == true) {
+            template.querySelector(".add-comment").style.visibility = "hidden";
+        }
+        else {
+            template.querySelectorAll(".button-offer").forEach(button => button.style.visibility = "hidden");
+        }
+        template.querySelector(".description-offer").textContent = ad.description;
+        template.querySelector(".rating-number").textContent = ad.rating;
+        let hashtagsTmp = template.querySelector(".hashtags-offer");
+        template.querySelectorAll(".tag").forEach(tag => tag.remove());
         ad.hashTags.forEach(tag => {
-            tags += `<span class="tag">#${tag}</span>`;
+            let hashtag = document.createElement('span');
+            hashtag.className = "tag";
+            hashtag.textContent = "#" + tag;
+            hashtagsTmp.append(hashtag);
         });
-        var reviews = "";
+        let reviewsTmp = template.querySelector(".reviews-offer");
+        template.querySelectorAll(".review").forEach(rev => rev.remove());
         ad.reviews.forEach(review => {
-            reviews += `<span class="review">${review}</span>`;
+            let review1 = document.createElement('span');
+            review1.className = "review";
+            review1.textContent = review;
+            reviewsTmp.append(review1);
         });
-        var tag = `<span class="tag"></span>`;
-            var offer = document.createElement('article');
-            offer.className = "offer";
-            offer.innerHTML = `
-                                <div class="top-info-offer">
-                                    <div class="left-info-offer">
-                                        <div class="image-and-percent">
-                                            <img src="${ad.photoLink}" class="image" alt="Offer photo">
-                                            <p class="percent">${ad.discount}%</p>
-                                        </div>
-                                        <p class="date-expiration">Until ${" " + ad.validUntil.getFullYear() + "-"+ (ad.validUntil.getMonth() + 1) + "-" + ad.validUntil.getDate()}</p>
-                                    </div>
-                                    <div class="right-info-offer">
-                                        <div class="centralized-line-right-info ">
-                                            <h3 class="offer-label">${ad.description}</h3>
-                                            <p class="seller-name">${ad.vendor}</p>
-                                            <a class="seller-link" href="${ad.link}">more info</a>
-                                            <div class="buttons">
-                                                <button class="button-settings-offer button-offer">
-                                                    <svg class="button-svg" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m22.683 9.394-1.88-.239c-.155-.477-.346-.937-.569-1.374l1.161-1.495c.47-.605.415-1.459-.122-1.979l-1.575-1.575c-.525-.542-1.379-.596-1.985-.127l-1.493 1.161c-.437-.223-.897-.414-1.375-.569l-.239-1.877c-.09-.753-.729-1.32-1.486-1.32h-2.24c-.757 0-1.396.567-1.486 1.317l-.239 1.88c-.478.155-.938.345-1.375.569l-1.494-1.161c-.604-.469-1.458-.415-1.979.122l-1.575 1.574c-.542.526-.597 1.38-.127 1.986l1.161 1.494c-.224.437-.414.897-.569 1.374l-1.877.239c-.753.09-1.32.729-1.32 1.486v2.24c0 .757.567 1.396 1.317 1.486l1.88.239c.155.477.346.937.569 1.374l-1.161 1.495c-.47.605-.415 1.459.122 1.979l1.575 1.575c.526.541 1.379.595 1.985.126l1.494-1.161c.437.224.897.415 1.374.569l.239 1.876c.09.755.729 1.322 1.486 1.322h2.24c.757 0 1.396-.567 1.486-1.317l.239-1.88c.477-.155.937-.346 1.374-.569l1.495 1.161c.605.47 1.459.415 1.979-.122l1.575-1.575c.542-.526.597-1.379.127-1.985l-1.161-1.494c.224-.437.415-.897.569-1.374l1.876-.239c.753-.09 1.32-.729 1.32-1.486v-2.24c.001-.757-.566-1.396-1.316-1.486zm-10.683 7.606c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"/></svg>
-                                                </button>
-                                                <button class="button-delete-offer button-offer">
-                                                    <svg class="button-svg" id="Capa_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m442.154 145c10.585 0 17.924-10.701 13.955-20.514-14.093-34.841-48.275-59.486-88.109-59.486h-18.414c-6.867-36.273-38.67-65-77.586-65h-32c-38.891 0-70.715 28.708-77.586 65h-18.414c-39.834 0-74.016 24.645-88.109 59.486-3.969 9.813 3.37 20.514 13.955 20.514zm-202.154-115h32c21.9 0 40.49 14.734 46.748 35h-125.496c6.258-20.266 24.848-35 46.748-35z"/><path d="m111.053 470.196c1.669 23.442 21.386 41.804 44.886 41.804h200.121c23.5 0 43.217-18.362 44.886-41.804l21.023-295.196h-331.938zm185.966-214.945c.414-8.274 7.469-14.655 15.73-14.232 8.274.414 14.646 7.457 14.232 15.73l-8 160c-.401 8.019-7.029 14.251-14.969 14.251-8.637 0-15.42-7.223-14.994-15.749zm-97.768-14.232c8.263-.415 15.317 5.959 15.73 14.232l8 160c.426 8.53-6.362 15.749-14.994 15.749-7.94 0-14.568-6.232-14.969-14.251l-8-160c-.413-8.273 5.959-15.316 14.233-15.73z"/></g></svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="line-right-info">
-                                            <p class="description-offer">${ad.description}</p>
-                                        </div>
-                                        <div class="line-right-info">
-                                            <p class="hashtags-offer">Hashtags:
-                                                ${tags}
-                                            </p>
-                                        </div>
-                                        <div class="reviews-offer line-right-info">
-                                            ${reviews}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bottom-info-offer">
-                                    <p class="rating">Rating <span class="rating-number">${ad.rating}</span>/5</p>
-                                    <button class="add-comment comments-button">Add comment</button>
-                                    <button class="more-comments comments-button">More comments</button>
-                                </div>
-            `;
-        return offer;
+        return template;
     }
     showAds(){
-
-        let firstButton = document.querySelector(".offers-list .button-load-more:last-child");
-        document.querySelectorAll(".offer").forEach( offer => offer.remove());
-        this.ads.getPage().forEach( ad => {
-            firstButton.before(this._getOffer(ad));
+        let secondButton = document.querySelector(".offers-list .button-load-more:last-child");
+        document.querySelectorAll(".offer-tmp").forEach( offer => offer.remove());
+        this._ads.getPage().forEach( ad => {
+            secondButton.before(this._getOffer(ad));
         });
     }
 
     addAd(ad){
-        if (this.ads.add(ad)){
+        if (this._ads.add(ad)){
             this.showAds();
             return true;
         }
+        return false;
+    }
+
+    editAd(id, ad){
+        if(this._ads.edit(id, ad)){
+            this.showAds();
+            return true;
+        }
+        return false;
     }
 }
 
@@ -81,6 +267,7 @@ let view = new View([
                         {
                             id: '1',
                             description : 'Скидка на шкафы - до 79%',
+                            label: 'Скидка на шкафы',
                             createdAt : new Date('2021-01-21T20:12:32'),
                             link : 'https://coollockers.ua',
                             vendor : 'Locker service',
@@ -89,11 +276,12 @@ let view = new View([
                             discount : '79',
                             validUntil : new Date('2022-01-21T20:12:32'),
                             rating : 3,
-                            reviews : ['Эти шкафы прекрасны!'] ,
+                            reviews : ['Эти шкафы прекрасны!', "Your shop is trash!"] ,
                         },
                         {
                             id: '2',
                             description : 'Скидка на столы - до 73%',
+                            label: 'Скидка на слолы',
                             createdAt : new Date('2021-03-13T20:12:32'),
                             link : 'https://coolTables.ua',
                             vendor : 'Table service',
@@ -107,6 +295,7 @@ let view = new View([
                         {
                             id: '3',
                             description : 'Скидка на шкафы - до 76%',
+                            label: 'Скидка на шкафы',
                             createdAt : new Date('2021-01-26T20:12:32'),
                             link : 'https://coollockers.ua',
                             vendor : 'Locker service',
@@ -120,6 +309,7 @@ let view = new View([
                         {
                             id: '4',
                             description : 'Скидка на столы - до 82%',
+                            label: 'Скидка на столы',
                             createdAt : new Date('2021-01-17T20:12:32'),
                             link : 'https://coolTables.ua',
                             vendor : 'Table service',
@@ -133,6 +323,7 @@ let view = new View([
                         {
                             id: '5',
                             description : 'Скидка на шкафы - до 2%',
+                            label: 'Скидка на шкафы',
                             createdAt : new Date('2021-01-28T20:12:32'),
                             link : 'https://coollockers.ua',
                             vendor : 'Locker service',
@@ -142,218 +333,22 @@ let view = new View([
                             validUntil : new Date('2022-02-21T20:12:32'),
                             rating : 2,
                             reviews : ['Эти шкафы прекрасны!'] ,
-                        },
-                        {
-                            id: '6',
-                            description : 'Скидка на столы - до 91%',
-                            createdAt : new Date('2021-01-01T20:12:32'),
-                            link : 'https://coolTables.ua',
-                            vendor : 'Table service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['Table', 'furniture', 'wood'] ,
-                            discount : '91',
-                            validUntil : new Date('2022-01-21T20:12:32'),
-                            rating : 4,
-                            reviews : ['Эти столы прекрасны!'] ,
-                        },
-                        {
-                            id: '7',
-                            description : 'Скидка на шкафы - до 48%',
-                            createdAt : new Date('2021-01-05T20:12:32'),
-                            link : 'https://coollockers.ua',
-                            vendor : 'Locker service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['locker', 'furniture', 'wood'] ,
-                            discount : '48',
-                            validUntil : new Date('2022-03-21T20:12:32'),
-                            rating : 1,
-                            reviews : ['Эти шкафы прекрасны!'] ,
-                        },
-                        {
-                            id: '8',
-                            description : 'Скидка на столы - до 86%',
-                            createdAt : new Date('2021-01-30T20:12:32'),
-                            link : 'https://coolTables.ua',
-                            vendor : 'Table service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['Table', 'furniture', 'wood'] ,
-                            discount : '86',
-                            validUntil : new Date('2022-01-21T20:12:32'),
-                            rating : 4,
-                            reviews : ['Эти столы прекрасны!'] ,
-                        },
-                        {
-                            id: '9',
-                            description : 'Скидка на шкафы - до 39%',
-                            createdAt : new Date('2021-01-17T20:12:32'),
-                            link : 'https://coollockers.ua',
-                            vendor : 'Locker service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['locker', 'furniture', 'wood'] ,
-                            discount : '39',
-                            validUntil : new Date('2022-03-21T20:12:32'),
-                            rating : 2,
-                            reviews : ['Эти шкафы прекрасны!'] ,
-                        },
-                        {
-                            id: '10',
-                            description : 'Скидка на столы - до 87%',
-                            createdAt : new Date('2021-01-21T20:12:32'),
-                            link : 'https://coolTables.ua',
-                            vendor : 'Table service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['Table', 'furniture', 'wood'] ,
-                            discount : '87',
-                            validUntil : new Date('2022-01-21T20:12:32'),
-                            rating : 5,
-                            reviews : ['Эти столы прекрасны!'] ,
-                        },
-                        {
-                            id: '11',
-                            description : 'Скидка на шкафы - до 88%',
-                            createdAt : new Date('2021-02-22T20:12:32'),
-                            link : 'https://coollockers.ua',
-                            vendor : 'Locker service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['locker', 'furniture', 'wood'] ,
-                            discount : '88',
-                            validUntil : new Date('2022-01-21T20:12:32'),
-                            rating : 5,
-                            reviews : ['Эти шкафы прекрасны!'] ,
-                        },
-                        {
-                            id: '12',
-                            description : 'Скидка на столы - до 37%',
-                            createdAt : new Date('2021-01-24T20:12:32'),
-                            link : 'https://coolTables.ua',
-                            vendor : 'Table service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['Table', 'furniture', 'wood'] ,
-                            discount : '37',
-                            validUntil : new Date('2022-01-21T20:12:32'),
-                            rating : 2,
-                            reviews : ['Эти столы прекрасны!'] ,
-                        },
-                        {
-                            id: '13',
-                            description : 'Скидка на шкафы - до 57%',
-                            createdAt : new Date('2021-03-12T20:12:32'),
-                            link : 'https://coollockers.ua',
-                            vendor : 'Locker service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['locker', 'furniture', 'wood'] ,
-                            discount : '57',
-                            validUntil : new Date('2022-01-21T20:12:32'),
-                            rating : 1,
-                            reviews : ['Эти шкафы прекрасны!'] ,
-                        },
-                        {
-                            id: '14',
-                            description : 'Скидка на столы - до 40%',
-                            createdAt : new Date('2021-01-18T20:12:32'),
-                            link : 'https://coolTables.ua',
-                            vendor : 'Table service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['Table', 'furniture', 'wood'] ,
-                            discount : '40',
-                            validUntil : new Date('2022-01-21T20:12:32'),
-                            rating : 4,
-                            reviews : ['Эти столы прекрасны!'] ,
-                        },
-                        {
-                            id: '15',
-                            description : 'Скидка на шкафы - до 4%',
-                            createdAt : new Date('2021-02-21T20:12:32'),
-                            link : 'https://coollockers.ua',
-                            vendor : 'Locker service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['locker', 'furniture', 'wood'] ,
-                            discount : '4',
-                            validUntil : new Date('2022-01-21T20:12:32'),
-                            rating : 3,
-                            reviews : ['Эти шкафы прекрасны!'] ,
-                        },
-                        {
-                            id: '16',
-                            description : 'Скидка на столы - до 90%',
-                            createdAt : new Date('2021-02-17T20:12:32'),
-                            link : 'https://coolTables.ua',
-                            vendor : 'Table service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['Table', 'furniture', 'wood'] ,
-                            discount : '90',
-                            validUntil : new Date('2022-01-21T20:12:32'),
-                            rating : 3,
-                            reviews : ['Эти столы прекрасны!'] ,
-                        },
-                        {
-                            id: '17',
-                            description : 'Скидка на шкафы - до 40%',
-                            createdAt : new Date('2021-01-08T20:12:32'),
-                            link : 'https://coollockers.ua',
-                            vendor : 'Locker service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['locker', 'furniture', 'wood'] ,
-                            discount : '40',
-                            validUntil : new Date('2022-01-21T20:12:32'),
-                            rating : 4,
-                            reviews : ['Эти шкафы прекрасны!'] ,
-                        },
-                        {
-                            id: '18',
-                            description : 'Скидка на столы - до 15%',
-                            createdAt : new Date('2021-01-09T20:12:32'),
-                            link : 'https://coolTables.ua',
-                            vendor : 'Table service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['Table', 'furniture', 'wood'] ,
-                            discount : '15',
-                            validUntil : new Date('2022-01-21T20:12:32'),
-                            rating : 3,
-                            reviews : ['Эти столы прекрасны!'] ,
-                        },
-                        {
-                            id: '19',
-                            description : 'Скидка на шкафы - до 42%',
-                            createdAt : new Date('2021-03-11T20:12:32'),
-                            link : 'https://coollockers.ua',
-                            vendor : 'Locker service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['locker', 'furniture', 'wood'] ,
-                            discount : '42',
-                            validUntil : new Date('2022-01-21T20:12:32'),
-                            rating : 5,
-                            reviews : ['Эти шкафы прекрасны!'] ,
-                        },
-                        {
-                            id: '20',
-                            description : 'Скидка на столы - до 89%',
-                            createdAt : new Date('2021-01-29T20:12:32'),
-                            link : 'https://coolTables.ua',
-                            vendor : 'Table service',
-                            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                            hashTags : ['Table', 'furniture', 'wood'] ,
-                            discount : '89',
-                            validUntil : new Date('2022-01-21T20:12:32'),
-                            rating : 4,
-                            reviews : ['Эти столы прекрасны!'] ,
-                        },
-                    ]);
-
+                        }
+    ], "Alex popovich" , false);
+view.showUser();
 view.showAds();
-
-setTimeout(function(){view.addAd({
-                                     id: '21',
-                                     description : 'Скидка на столы - до 89%',
-                                     createdAt : new Date('2023-01-29T20:12:32'),
-                                     link : 'https://coolTables.ua',
-                                     vendor : 'Table service',
-                                     photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-                                     hashTags : ['Table', 'furniture', 'wood'] ,
-                                     discount : '89',
-                                     validUntil : new Date('2023-01-21T20:12:32'),
-                                     rating : 4,
-                                     reviews : ['Эти столы прекрасны!'] ,
-                                 }
-                                 )}, 5000);
-
+view.addAd({
+            id: '21',
+            description : 'Скидка на столы - до 89%',
+            label: 'Skidka na tabels',
+            createdAt : new Date('2023-01-29T20:12:32'),
+            link : 'https://coolTables.ua',
+            vendor : 'Table service',
+            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
+            hashTags : ['Table', 'furniture', 'wood'] ,
+            discount : '89',
+            validUntil : new Date('2023-01-21T20:12:32'),
+            rating : 4,
+            reviews : ['Эти столы прекрасны!'] ,
+        }
+        );

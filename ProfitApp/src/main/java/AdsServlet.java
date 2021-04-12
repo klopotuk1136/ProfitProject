@@ -10,10 +10,9 @@ import java.io.IOException;
 public class AdsServlet extends HttpServlet {
     private static AdList adList = new AdList();
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
+        response.setContentType("json");
         String[] uris = request.getRequestURI().split("/");
 
         if (uris.length == 3){
@@ -40,11 +39,13 @@ public class AdsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("json");
         response.getWriter().print((new Gson()).toJson(adList.getAd(request.getParameter("id"))));
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("json");
         response.getWriter().print((new Gson()).toJson(adList.removeAd(request.getParameter("id"))));
     }
 }

@@ -1,0 +1,2 @@
+SELECT * FROM profit.OFFER
+WHERE USER_ID = 1

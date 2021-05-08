@@ -1,223 +1,13 @@
-class AdsList{
-    _adList = [];
-    constructor(adList){
-        this._adList = adList.concat();
-    }
-
-    getPage(skip = 0, top = 10, filterConfig = undefined){
-        if (typeof skip !== 'number' || typeof top !== 'number') {
-            console.log('Error with inputting types!');
-            return;
-        }
-    
-        let returningAds = this._adList;
-        if (filterConfig){
-        
-            for (let parameter in filterConfig){
-                if (parameter === 'hashTags' && filterConfig.hashTags.size != 0){
-                    filterConfig.hashTags.forEach(tag => {
-                        returningAds = returningAds.filter(ad => ad.hashTags.includes(tag));
-                    });
-                }
-                if (parameter === 'dateFrom' && filterConfig.dateFrom.length != 0){
-                    let dateFrom = new Date(filterConfig.dateFrom);
-                    returningAds = returningAds.filter(ad => ad.createdAt >= dateFrom);
-                }
-                else if (parameter === 'vendor' && filterConfig.vendor.length != 0){
-                    returningAds = returningAds.filter(ad => ad.vendor === filterConfig.vendor);
-                }
-            }
-        }
-            
-        returningAds.sort(this._comparator);
-        return returningAds.slice(skip, skip + top);
-    
-    }
-    getFilteredSize(skip = 0, filterConfig = undefined){
-        if (typeof skip !== 'number') {
-            console.log('Error with inputting types!');
-            return;
-        }
-    
-        let returningAds = this._adList;
-        if (filterConfig){
-        
-            for (let parameter in filterConfig){
-                if (parameter === 'hashTags' && filterConfig.hashTags.size != 0){
-                    filterConfig.hashTags.forEach(tag => {
-                        returningAds = returningAds.filter(ad => ad.hashTags.includes(tag));
-                    });
-                }
-                if (parameter === 'dateFrom' && filterConfig.dateFrom.length != 0){
-                    let dateFrom = new Date(filterConfig.dateFrom);
-                    returningAds = returningAds.filter(ad => ad.createdAt >= dateFrom);
-                }
-                else if (parameter === 'vendor' && filterConfig.vendor.length != 0){
-                    returningAds = returningAds.filter(ad => ad.vendor === filterConfig.vendor);
-                }
-            }
-        }
-        return returningAds.length;
-    }
-    _comparator(first, second){
-        return second.createdAt - first.createdAt;
-    }
-
-    get(id){
-        if (typeof id === 'string'){
-            return this._adList.find(ad => ad.id === id)
-        }
-        console.log('Incorrect type of id. Id must be a string.');
-    }
-
-    static validate(ad){
-        let requiredParams = ['id','label', 'description', 'createdAt', 'link', 'vendor', 'hashTags', 'discount', 'validUntil'];
-        for (let i = 0; i < requiredParams.length; i++) {
-            if (ad[requiredParams[i]] === undefined) {
-                return false;
-            }
-        }
-        for (let param in ad){
-            switch (param) {
-                case 'id':
-                    if (typeof ad.id !== 'string' || ad.id.length === 0) {
-                        return false;
-                    }
-                    break;
-                case 'label':
-                    if (typeof ad.label !== 'string' || ad.label.length === 0){
-                        return false;
-                    }
-                    break;
-                case 'description':
-                    if (typeof ad.description !== 'string' || ad.description.length >= 200 || ad.description.length === 0) {
-                        return false;
-                    }
-                    break;
-                case 'createdAt':
-                    if (!(ad.createdAt instanceof Date)) {
-                        return false;
-                    }
-                    break;
-                case 'link':
-                    if (typeof ad.link !== 'string' || ad.link.length === 0) {
-                        return false;
-                    }
-                    break;
-                case 'vendor':
-                    if (typeof ad.vendor !== 'string' || ad.vendor.length === 0) {
-                        return false;
-                    }
-                    break;
-                case 'photoLink':
-                    if (ad.photoLink && (typeof ad.photoLink !== 'string' || ad.photoLink.length === 0)) {
-                        return false;
-                    }
-                    break;
-                case 'hashTags':
-                    if (ad.hashTags){
-                        if (!ad.hashTags.every(hashtag => typeof hashtag === 'string')){
-                            return false;
-                        }
-                    }
-                    break;
-                case 'discount':
-                    if (typeof ad.discount !== 'string' || ad.discount.length === 0) {
-                        return false;
-                    }
-                    break;
-                case 'validUntil':
-                    if (!(ad.validUntil instanceof Date)) {
-                        return false;
-                    }
-                    break;
-                case 'rating':
-                    if (!(typeof ad.rating === 'undefined' || typeof ad.rating === 'number')){
-                        return false;
-                    }
-                    break;
-                case 'reviews':
-                    if (!Array.isArray(ad.reviews)) {
-                        return false;
-                    }
-                    break;
-                default:
-                    return false;
-            }
-        }
-        return true;
-    }
-
-    add(ad){
-        if (AdsList.validate(ad)) {
-            this._adList.push(ad);
-            return true;
-        }
-        return false;
-    }
-
-    remove(id){
-        if (typeof id === 'string'){
-            let index = this._adList.findIndex(ad => ad.id === id);
-            if (index !== -1){
-                this._adList.splice(index, 1);
-    
-                return true;
-            }
-        }
-        return false;
-    }
-
-    edit(id, ad){
-        for (let param in ad){
-            if (param === 'id' || param === 'vendor' || param === 'createdAt'){
-                console.log("You can't change id, vendor, createdAt");
-                return false;
-            }
-        }
-        
-        var tmpAd = {};
-        Object.assign(tmpAd, this.get(id));
-        
-        for (let param in ad){
-            tmpAd[param] = ad[param];
-        }
-    
-        if (!AdsList.validate(tmpAd)){
-            return false;
-        }
-        
-        this.remove(id);
-        this.add(tmpAd);
-
-        return true;
-    }
-
-    addAll(adList){
-        return adList.filter(ad => !this.add(ad));
-    }
-    getAllAds(){
-        return this._ads;
-    }
-    clear(){
-        this._adList.splice(0, this._adList.length);
-    }
-}
-
 class View{
     _ads;
     _tmpAd;
     _username;
     _isVendor;
-    //_filterBlock;
-    //_offesListBlock;
     _mainPage;
     constructor(adList, username, isVendor){
         this._ads = new AdsList(adList);
         this._tmpAd = document.querySelector(".offer-tmp");
         this._mainPage = document.querySelector(".main-page");
-        //this._filterBlock = document.querySelector(".filters-box");
-        //this._offesListBlock = document.querySelector(".offers-list");
         this._username = username;
         this._isVendor = isVendor;
     }
@@ -231,14 +21,7 @@ class View{
             document.querySelector(".log-out").style.visibility = "visible";
         }
     }
-    _getOffer(ad){
-        let template = document.importNode(this._tmpAd, true);
-        template.querySelector(".image-in-offer").setAttribute('src', ad.photoLink);
-        template.querySelector(".percent").textContent = ad.discount + "%";
-        template.querySelector(".date-expiration").textContent = ad.validUntil.getFullYear() + " " + (ad.validUntil.getMonth() + 1) + " " + ad.validUntil.getDate();
-        template.querySelector(".offer-label").textContent = ad.label;
-        template.querySelector(".seller-name").textContent = ad.vendor;
-        template.querySelector(".seller-link").setAttribute("href", ad.link);
+    _showButtons(template){
         if(this._username == null || this._username.length == 0){
             template.querySelectorAll(".button-offer").forEach(button => button.style.visibility = "hidden");
             template.querySelector(".add-comment").style.visibility = "hidden";
@@ -249,6 +32,26 @@ class View{
         else {
             template.querySelectorAll(".button-offer").forEach(button => button.style.visibility = "hidden");
         }
+    }
+    _showReviews(template, ad){
+        let reviewsTmp = template.querySelector(".reviews-offer");
+        template.querySelectorAll(".review").forEach(rev => rev.remove());
+        ad.reviews.forEach(review => {
+            let review1 = document.createElement('span');
+            review1.className = "review";
+            review1.textContent = review;
+            reviewsTmp.append(review1);
+        });
+    }
+    _buildOffer(ad){
+        let template = document.importNode(this._tmpAd, true);
+        template.querySelector(".image-in-offer").setAttribute('src', ad.photoLink);
+        template.querySelector(".percent").textContent = ad.discount + "%";
+        template.querySelector(".date-expiration").textContent = ad.validUntil.getFullYear() + " " + (ad.validUntil.getMonth() + 1) + " " + ad.validUntil.getDate();
+        template.querySelector(".offer-label").textContent = ad.label;
+        template.querySelector(".seller-name").textContent = ad.vendor;
+        template.querySelector(".seller-link").setAttribute("href", ad.link);
+        this._showButtons(template);
         template.querySelector(".description-offer").textContent = ad.description;
         template.querySelector(".rating-number").textContent = ad.rating;
         let hashtagsTmp = template.querySelector(".hashtags-offer");
@@ -259,14 +62,7 @@ class View{
             hashtag.textContent = "#" + tag;
             hashtagsTmp.append(hashtag);
         });
-        let reviewsTmp = template.querySelector(".reviews-offer");
-        template.querySelectorAll(".review").forEach(rev => rev.remove());
-        ad.reviews.forEach(review => {
-            let review1 = document.createElement('span');
-            review1.className = "review";
-            review1.textContent = review;
-            reviewsTmp.append(review1);
-        });
+        this._showReviews(template, ad);
         return template;
     }
     showAds(skip = 0, top = 10, filterConfig = undefined){
@@ -275,7 +71,7 @@ class View{
             document.querySelectorAll(".offer-tmp").forEach( offer => offer.remove());
 
             this._ads.getPage(skip, top, filterConfig).forEach( ad => {
-                secondButton.before(this._getOffer(ad));
+                secondButton.before(this._buildOffer(ad));
             });
             if (this._ads.getFilteredSize(skip, filterConfig) <= top) {
                 secondButton.style.visibility = 'hidden';
@@ -309,29 +105,46 @@ class View{
         return this._adList.getAllAds();
     }
 
-    getAuthorisationPage(){
+    _getAddOfferPage(){
+        return `
+        <form class='add-offer-form' name='add-offer-form'>
+            <input type='text' id='label-input' class='input-add-offer' placeholder='Label'><label for="label-input">Enter your label</label>
+            <input type='text' id='description-input' class='input-add-offer' placeholder='Description'><label for="description-input">Enter description</label>
+            <input type='text' id='link-input' class='input-add-offer' placeholder='Link'><label for="link-input">Enter link to your website</label>
+            <input type='text' id='hashtags-input' class='input-add-offer' placeholder='Hashtags'><label for="hashtags-input">Enter your hashtags</label>
+            <input type='date' id='date-input' class='input-add-offer'><label for="label-input">Enter date of expiration</label>
+            <input type='text' id='discount-input' class='input-add-offer' placeholder='Discount'><label for="hashtags-input">Enter your discount</label>
+            <button type='submit'>Submit</Button>
+
+        </form>
+        `
+    }
+    addOfferClicked(){
+        document.querySelector(".main-page").remove();
+        let newMain = document.createElement("main");
+        newMain.className = "add-offer-main-page main-page";
+        newMain.innerHTML = this._getAddOfferPage();
+        document.querySelector('.header').after(newMain);
+    }
+    _getAuthorisationPage(){
         return `
             <p class="info-text">Enter your login and password</p>
-            <form class='log-in-form'>
+            <form class='log-in-form' name='log-in-form'>
                 <input type="text" name="loginInput" class="login-input log-in-input" placeholder="Login">
                 <input type="text" name="passwordInput" class="password-input log-in-input" placeholder="Password">
-                <button class="sign-in-button log-in-input">Sign in</button>
+                <button class="sign-in-button log-in-input" type="submit">Sign in</button>
             </form>
         `;
     }
-
     logInOutClicked(){
         if (this._username != ''){
             this._username = '';
             this._isVendor = false;
         }else {
-            //this._offesListBlock.remove();
-            //this._filterBlock.remove();
-            //this._mainPage.remove();
             document.querySelector(".main-page").remove();
             let newMain = document.createElement("main");
             newMain.className = "log-in-main-page main-page";
-            newMain.innerHTML = this.getAuthorisationPage();
+            newMain.innerHTML = this._getAuthorisationPage();
             document.querySelector('.header').after(newMain);
         }
     }
@@ -455,22 +268,34 @@ window.onload = function(){
         top += 1;
         view.showAll(skip, top, filterConfig);
     }
-
+    document.querySelector(".button-add-offer").addEventListener('click', handleAddOffer);
+    function handleAddOffer(){
+        view.addOfferClicked();
+    }
     document.querySelector(".name-and-sign-out").addEventListener('click', handleLogInOut);
     function handleLogInOut(){
         view.logInOutClicked();
         if (document.querySelector(".log-in-main-page") != null){
-            document.querySelector(".sign-in-button").addEventListener('click', handleSignInButton);
+            document.forms[0].addEventListener('submit', handleSignInButton);
         }
         view.showAll(skip, top, filterConfig);
     }
     function handleSignInButton(event){
-        let form = event.target.parentNode;
+        event.preventDefault();
+        let form = event.target;
+
         if(form.elements.loginInput.value != '' && form.elements.passwordInput.value != ''){
             view.setUserName(form.elements.loginInput.value);
             view.setVendor(true);
             form.querySelector(".sign-in-button").removeEventListener('click', handleSignInButton);
             handleClickOnSiteName();
+        }else{
+            if(form.querySelector('.alert-wrong-data') == null){
+                let newParagraph = document.createElement('p');
+                newParagraph.className = 'alert-wrong-data';
+                newParagraph.textContent = "fields can't be empty!";
+                form.querySelector(".sign-in-button").after(newParagraph);
+            }
         }
     }
     document.querySelector(".site-name-button").addEventListener("click", handleClickOnSiteName);

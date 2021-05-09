@@ -15,22 +15,30 @@ class View{
         if(this._username == null || this._username.length == 0){
             document.querySelector(".profile").textContent = "Log in";
             document.querySelector(".log-out").style.visibility = "hidden";
+            document.querySelector(".button-add-offer").style.visibility = "hidden";
         }
         else {
             document.querySelector(".profile").textContent = this._username;
             document.querySelector(".log-out").style.visibility = "visible";
+            if(this._isVendor == true){
+                document.querySelector(".button-add-offer").style.visibility = "visible";
+            }
+            else {
+                document.querySelector(".button-add-offer").style.visibility = "hidden";
+            }
         }
     }
     _showButtons(template){
         if(this._username == null || this._username.length == 0){
             template.querySelectorAll(".button-offer").forEach(button => button.style.visibility = "hidden");
-            template.querySelector(".add-comment").style.visibility = "hidden";
+            template.querySelectorAll(".add-comment").forEach(button => button.style.visibility = "hidden");
         }
         else if (this._isVendor == true) {
-            template.querySelector(".add-comment").style.visibility = "hidden";
+            template.querySelectorAll(".add-comment").forEach(button => button.style.visibility = "hidden");
         }
         else {
             template.querySelectorAll(".button-offer").forEach(button => button.style.visibility = "hidden");
+            template.querySelectorAll(".add-comment").forEach(button => button.style.visibility = "visible");
         }
     }
     _showReviews(template, ad){
@@ -39,12 +47,13 @@ class View{
         ad.reviews.forEach(review => {
             let review1 = document.createElement('span');
             review1.className = "review";
-            review1.textContent = review;
+            review1.textContent = review.text;
             reviewsTmp.append(review1);
         });
     }
     _buildOffer(ad){
         let template = document.importNode(this._tmpAd, true);
+        template.setAttribute('offer-id', ad.id);
         template.querySelector(".image-in-offer").setAttribute('src', ad.photoLink);
         template.querySelector(".percent").textContent = ad.discount + "%";
         template.querySelector(".date-expiration").textContent = ad.validUntil.getFullYear() + " " + (ad.validUntil.getMonth() + 1) + " " + ad.validUntil.getDate();
@@ -83,19 +92,20 @@ class View{
     }
 
     addAd(ad){
-        if (this._ads.add(ad)){
-            this.showAds();
-            return true;
-        }
-        return false;
+        return this._ads.add(ad);
     }
 
     editAd(id, ad){
         if(this._ads.edit(id, ad)){
-            this.showAds();
             return true;
         }
         return false;
+    }
+    addReview(id, review){
+        this._ads.addReview(id, review);
+    }
+    deleteAd(id){
+        return this._ads.remove(id);
     }
     showAll(skip = 0, top = 10, filterConfig = undefined){
         this.showUser();
@@ -108,14 +118,14 @@ class View{
     _getAddOfferPage(){
         return `
         <form class='add-offer-form' name='add-offer-form'>
-            <input type='text' id='label-input' class='input-add-offer' placeholder='Label'><label for="label-input">Enter your label</label>
-            <input type='text' id='description-input' class='input-add-offer' placeholder='Description'><label for="description-input">Enter description</label>
-            <input type='text' id='link-input' class='input-add-offer' placeholder='Link'><label for="link-input">Enter link to your website</label>
-            <input type='text' id='hashtags-input' class='input-add-offer' placeholder='Hashtags'><label for="hashtags-input">Enter your hashtags</label>
-            <input type='date' id='date-input' class='input-add-offer'><label for="label-input">Enter date of expiration</label>
-            <input type='text' id='discount-input' class='input-add-offer' placeholder='Discount'><label for="hashtags-input">Enter your discount</label>
-            <button type='submit'>Submit</Button>
-
+            <input type='text' id='label-input' class='input-add-offer' placeholder='Label'><label for="label-input" class='label-add-offer'>Enter your label</label>
+            <input type='text' id='description-input' class='input-add-offer' placeholder='Description'><label for="description-input" class='label-add-offer'>Enter description</label>
+            <input type='text' id='link-input' class='input-add-offer' placeholder='Link'><label for="link-input" class='label-add-offer'>Enter link to your website</label>
+            <input type='text' id='hashtags-input' class='input-add-offer' placeholder='Hashtags'><label for="hashtags-input" class='label-add-offer'>Enter your hashtags</label>
+            <input type='date' id='date-input' class='input-add-offer'><label for="date-input" class='label-add-offer'>Enter date of expiration</label>
+            <input type='text' id='discount-input' class='input-add-offer' placeholder='Discount'><label for="discount-input" class='label-add-offer'>Enter your discount</label>
+            <input type='text' id='photo-input' class='input-add-offer' placeholder='Link to your photo'><label for='photo-input' class='label-add-offer'> Enter link to your photo </label>
+            <button type='submit' class='submit-add-offer'>Submit</Button>
         </form>
         `
     }
@@ -148,6 +158,24 @@ class View{
             document.querySelector('.header').after(newMain);
         }
     }
+    _getAddCommentPage(){
+    return`
+        <p class='info-text'>Add your review</p>
+        <form class="add-comment-form" name="add-comment-form">
+            <input type='text' name="reviewInput" class='review-input add-comment-input' placeholder='Your review'>
+            <input type='number' name='ratingInput' class='rating-input add-comment-input' placeholder='1-5'>
+            <label class"label-add-comment" for="ratingInput">Your rating</label>
+            <button class='add-review-button add-comment-input' type='submit'>Add review</button>
+        </form>
+    `
+    }
+    addCommentClicked(){
+        document.querySelector(".main-page").remove();
+        let newMain = document.createElement("main");
+        newMain.className = "add-comment-main-page main-page";
+        newMain.innerHTML = this._getAddCommentPage();
+        document.querySelector('.header').after(newMain);
+    }
 
     siteNameClicked(){
         document.querySelector(".main-page").remove();
@@ -159,12 +187,10 @@ class View{
     setVendor(isVendor){
         this._isVendor = isVendor;
     }
+    getUsername(){
+        return this._username;
+    }
 }
-
-
-
-
-
 
 window.onload = function(){
 
@@ -180,8 +206,11 @@ window.onload = function(){
             hashTags : ['locker', 'furniture', 'wood'] ,
             discount : '79',
             validUntil : new Date('2022-01-21T20:12:32'),
-            rating : 3,
-            reviews : ['Эти шкафы прекрасны!', "Your shop is trash!"] ,
+            rating : 3.5,
+            reviews : [
+                {text:'Эти шкафы прекрасны!', rating:5},
+                {text:"Your shop is trash!", rating:2}
+                ],
         },
         {
             id: '2',
@@ -195,7 +224,7 @@ window.onload = function(){
             discount : '73',
             validUntil : new Date('2022-01-21T20:12:32'),
             rating : 4,
-            reviews : ['Эти столы прекрасны!'] ,
+            reviews : [{text:'Эти столы прекрасны!', rating:4}] ,
         },
         {
             id: '3',
@@ -209,7 +238,7 @@ window.onload = function(){
             discount : '76',
             validUntil : new Date('2022-01-21T20:12:32'),
             rating : 2,
-            reviews : ['Эти шкафы прекрасны!'] ,
+            reviews : [{text:'Эти шкафы прекрасны!', rating:2}] ,
         },
         {
             id: '4',
@@ -223,7 +252,7 @@ window.onload = function(){
             discount : '82',
             validUntil : new Date('2022-01-21T20:12:32'),
             rating : 4,
-            reviews : ['Эти столы прекрасны!'] ,
+            reviews : [{text:'Эти столы прекрасны!', rating:4}] ,
         },
         {
             id: '5',
@@ -237,14 +266,15 @@ window.onload = function(){
             discount : '2',
             validUntil : new Date('2022-02-21T20:12:32'),
             rating : 2,
-            reviews : ['Эти шкафы прекрасны!'] ,
+            reviews : [{text:'Эти шкафы ужасны!', rating:2}] ,
         }
-], "" , true);
+], "пашка" , false);
 
 
     let filterConfig = {};
     let skip = 0;
-    let top = 1;
+    let top = 10;
+    let editingId = 0;
     view.showAll(skip, top, filterConfig);
     
     document.querySelector(".filters-box").addEventListener('change', handleFilter);
@@ -259,26 +289,68 @@ window.onload = function(){
         else {
             filterConfig.hashTags = [];
         }
-        top = 1;
+        top = 10;
         view.showAll(skip, top, filterConfig);
     }
 
-    document.querySelector(".button-load-more").addEventListener('click', handleAddMore);
     function handleAddMore(){
-        top += 1;
+        top += 10;
         view.showAll(skip, top, filterConfig);
     }
-    document.querySelector(".button-add-offer").addEventListener('click', handleAddOffer);
     function handleAddOffer(){
         view.addOfferClicked();
+        if(document.querySelector(".add-offer-main-page") != null){
+            document.forms[0].addEventListener('submit', handleSubmitAddOffer);
+        }
+    }
+    function buildAddOffer(form){
+        let newOffer = {};
+        newOffer.id = (new Date()).getTime().toString();
+        newOffer.label = form.elements["label-input"].value;
+        newOffer.description = form.elements["description-input"].value;
+        newOffer.link = form.elements["link-input"].value;
+        newOffer.validUntil = new Date(form.elements["date-input"].value);
+        newOffer.discount = form.elements["discount-input"].value;
+        newOffer.photoLink = form.elements["photo-input"].value;
+        newOffer.hashTags = form.elements["hashtags-input"].value.split(' ');
+        newOffer.reviews = [];
+        newOffer.createdAt = new Date();
+        newOffer.vendor = view.getUsername();
+        newOffer.rating = 5;
+        return newOffer;
+    }
+    function handleSubmitAddOffer(){
+        event.preventDefault();
+        let form = event.target;
+        let valid = true;
+        for(let element in form.elements){
+            if(form.elements[element].value == '' && form.elements[element].type != 'submit'){
+                valid = false;
+            }
+        }
+        if(!valid){
+            if(form.querySelector('.alert-wrong-data') == null){
+                let newParagraph = document.createElement('p');
+                newParagraph.className = 'alert-wrong-data';
+                newParagraph.textContent = "fields can't be empty!";
+                newParagraph.style.marginBottom = '1rem';
+                form.querySelector(".submit-add-offer").after(newParagraph);
+            }
+        }
+        else {
+            view.addAd(buildAddOffer(form));
+            handleClickOnSiteName();
+        }
+
     }
     document.querySelector(".name-and-sign-out").addEventListener('click', handleLogInOut);
     function handleLogInOut(){
         view.logInOutClicked();
         if (document.querySelector(".log-in-main-page") != null){
             document.forms[0].addEventListener('submit', handleSignInButton);
+        }else {
+            handleClickOnSiteName();
         }
-        view.showAll(skip, top, filterConfig);
     }
     function handleSignInButton(event){
         event.preventDefault();
@@ -294,6 +366,7 @@ window.onload = function(){
                 let newParagraph = document.createElement('p');
                 newParagraph.className = 'alert-wrong-data';
                 newParagraph.textContent = "fields can't be empty!";
+                newParagraph.style.marginBottom = '1rem';
                 form.querySelector(".sign-in-button").after(newParagraph);
             }
         }
@@ -303,6 +376,88 @@ window.onload = function(){
         view.siteNameClicked();
         view.showAll(skip, top, filterConfig);
     }
-    
+    document.querySelector(".offers-list").addEventListener("click", handleClickOnOffers);
+    function deleteOffer(button){
+        let id = button.closest('article').getAttribute('offer-id');
+        view.deleteAd(id);
+        view.showAll(skip, top, filterConfig);
+    }
+    function handleSubmitEditOffer(){
+        event.preventDefault();
+
+        let form = event.target;
+        let newOffer = {};
+        newOffer.label = form.elements["label-input"].value;
+        newOffer.description = form.elements["description-input"].value;
+        newOffer.link = form.elements["link-input"].value;
+        if(form.elements["date-input"].value !== ''){
+            newOffer.validUntil = new Date(form.elements["date-input"].value);
+        }
+        newOffer.discount = form.elements["discount-input"].value;
+        newOffer.photoLink = form.elements["photo-input"].value;
+        if(form.elements["hashtags-input"].value !== ''){
+            newOffer.hashTags = form.elements["hashtags-input"].value.split(' ');
+        }
+        view.editAd(editingId, newOffer);
+        handleClickOnSiteName();
+    }
+    function editOffer(button){
+        editingId = event.target.closest('article').getAttribute('offer-id');
+        view.addOfferClicked();
+        if(document.querySelector(".add-offer-main-page") != null){
+            document.forms[0].addEventListener('submit', handleSubmitEditOffer);
+        }
+    }
+    function handleSubmitAddComment(){
+        event.preventDefault();
+        let form = event.target;
+        let review = {}
+        if(form.elements.reviewInput.value != '' && form.elements.ratingInput.value != ''){
+            review.text = form.elements.reviewInput.value;
+            review.rating = parseInt(form.elements.ratingInput.value);
+            view.addReview(editingId, review);
+            handleClickOnSiteName();
+        }
+        else {
+            if(form.querySelector('.alert-wrong-data') == null){
+                let newParagraph = document.createElement('p');
+                newParagraph.className = 'alert-wrong-data';
+                newParagraph.textContent = "fields can't be empty!";
+                newParagraph.style.marginBottom = '1rem';
+                form.querySelector(".sign-in-button").after(newParagraph);
+            }
+        }
+    }
+    function addComment(button){
+        editingId = event.target.closest('article').getAttribute('offer-id');
+        view.addCommentClicked();
+        if(document.querySelector(".add-comment-main-page") != null){
+            document.forms[0].addEventListener('submit', handleSubmitAddComment);
+        }
+    }
+    function handleClickOnOffers(){
+        let button = event.target.closest('button');
+        if(button != null){
+            if(button.id === 'editOffer'){
+                editOffer(button);
+
+            }
+            else if(button.id === 'deleteOffer'){
+                deleteOffer(button);
+            }
+            else if(button.id === 'addCommentOffer'){
+                addComment(button);
+            }
+            else if(button.id === 'addOffers'){
+                handleAddOffer();
+            }
+            else if(button.id === 'loadMore'){
+                handleAddMore();
+            }
+
+        }
+
+    }
+
 }
 

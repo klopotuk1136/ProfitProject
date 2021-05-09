@@ -180,7 +180,9 @@ class AdsList{
         Object.assign(tmpAd, this.get(id));
         
         for (let param in ad){
-            tmpAd[param] = ad[param];
+            if(ad[param] !== ''){
+                tmpAd[param] = ad[param];
+            }
         }
     
         if (!AdsList.validate(tmpAd)){
@@ -191,6 +193,21 @@ class AdsList{
         this.add(tmpAd);
 
         return true;
+    }
+
+    _countRating(id){
+        let newRating = 0;
+        this.get(id).reviews.forEach(review => newRating += review.rating);
+
+
+        newRating /= this.get(id).reviews.length;
+        this.get(id).rating = newRating;
+        console.log(this.get(id));
+    }
+
+    addReview(id, review){
+        this.get(id).reviews.push(review);
+        this._countRating(id);
     }
 
     addAll(adList){

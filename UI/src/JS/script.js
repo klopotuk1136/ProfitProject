@@ -39,13 +39,26 @@ class View{
                 if(button.closest('article').querySelector(".seller-name").textContent !== this._username){
                     button.style.visibility = "hidden";
                 }
+                else {
+                    button.style.visibility = "visible";
+                }
             });
             template.querySelectorAll(".button-delete-offer").forEach(button => {
                 if(button.closest('article').querySelector(".seller-name").textContent !== this._username){
                     button.style.visibility = "hidden";
                 }
+                else {
+                    button.style.visibility = "visible";
+                }
             });
-            template.querySelectorAll(".add-comment").forEach(button => button.style.visibility = "hidden");
+            template.querySelectorAll(".add-comment").forEach(button => {
+                if(button.closest('article').querySelector(".seller-name").textContent === this._username){
+                    button.style.visibility = "hidden";
+                }
+                else {
+                    button.style.visibility = "visible";
+                }
+            });
         }
         else {
             template.querySelectorAll(".button-offer").forEach(button => {button.style.visibility = "hidden";});

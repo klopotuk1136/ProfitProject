@@ -4,8 +4,9 @@ class View{
     _username;
     _isVendor;
     _mainPage;
-    constructor(adList, username, isVendor){
-        this._ads = new AdsList(adList);
+    constructor(username, isVendor){
+        this._ads = new AdsList();
+        this._ads.restore();
         this._tmpAd = document.querySelector(".offer-tmp");
         this._mainPage = document.querySelector(".main-page");
         this._username = username;
@@ -34,10 +35,20 @@ class View{
             template.querySelectorAll(".add-comment").forEach(button => button.style.visibility = "hidden");
         }
         else if (this._isVendor == true) {
+            template.querySelectorAll(".button-settings-offer").forEach(button => {
+                if(button.closest('article').querySelector(".seller-name").textContent !== this._username){
+                    button.style.visibility = "hidden";
+                }
+            });
+            template.querySelectorAll(".button-delete-offer").forEach(button => {
+                if(button.closest('article').querySelector(".seller-name").textContent !== this._username){
+                    button.style.visibility = "hidden";
+                }
+            });
             template.querySelectorAll(".add-comment").forEach(button => button.style.visibility = "hidden");
         }
         else {
-            template.querySelectorAll(".button-offer").forEach(button => button.style.visibility = "hidden");
+            template.querySelectorAll(".button-offer").forEach(button => {button.style.visibility = "hidden";});
             template.querySelectorAll(".add-comment").forEach(button => button.style.visibility = "visible");
         }
     }
@@ -62,7 +73,7 @@ class View{
         template.querySelector(".seller-link").setAttribute("href", ad.link);
         this._showButtons(template);
         template.querySelector(".description-offer").textContent = ad.description;
-        template.querySelector(".rating-number").textContent = ad.rating;
+        template.querySelector(".rating-number").textContent = ad.rating.toFixed(1);
         let hashtagsTmp = template.querySelector(".hashtags-offer");
         template.querySelectorAll(".tag").forEach(tag => tag.remove());
         ad.hashTags.forEach(tag => {
@@ -192,83 +203,90 @@ class View{
     }
 }
 
-window.onload = function(){
+function startLocalStorage(){
+    if(localStorage.getItem("offersList") == null){
+        let offersList = [
+                     {
+                         id: '1',
+                         description : 'Скидка на шкафы - до 79%',
+                         label: 'Скидка на шкафы',
+                         createdAt : new Date('2021-01-21T20:12:32'),
+                         link : 'https://coollockers.ua',
+                         vendor : 'Locker service',
+                         photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
+                         hashTags : ['locker', 'furniture', 'wood'] ,
+                         discount : '79',
+                         validUntil : new Date('2022-01-21T20:12:32'),
+                         rating : 3.5,
+                         reviews : [
+                             {text:'Эти шкафы прекрасны!', rating:5},
+                             {text:"Your shop is trash!", rating:2}
+                             ],
+                     },
+                     {
+                         id: '2',
+                         description : 'Скидка на столы - до 73%',
+                         label: 'Скидка на слолы',
+                         createdAt : new Date('2021-03-13T20:12:32'),
+                         link : 'https://coolTables.ua',
+                         vendor : 'Table service',
+                         photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
+                         hashTags : ['Table', 'furniture', 'wood'] ,
+                         discount : '73',
+                         validUntil : new Date('2022-01-21T20:12:32'),
+                         rating : 4,
+                         reviews : [{text:'Эти столы прекрасны!', rating:4}] ,
+                     },
+                     {
+                         id: '3',
+                         description : 'Скидка на шкафы - до 76%',
+                         label: 'Скидка на шкафы',
+                         createdAt : new Date('2021-01-26T20:12:32'),
+                         link : 'https://coollockers.ua',
+                         vendor : 'Locker service',
+                         photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
+                         hashTags : ['locker', 'furniture', 'wood'] ,
+                         discount : '76',
+                         validUntil : new Date('2022-01-21T20:12:32'),
+                         rating : 2,
+                         reviews : [{text:'Эти шкафы прекрасны!', rating:2}] ,
+                     },
+                     {
+                         id: '4',
+                         description : 'Скидка на столы - до 82%',
+                         label: 'Скидка на столы',
+                         createdAt : new Date('2021-01-17T20:12:32'),
+                         link : 'https://coolTables.ua',
+                         vendor : 'Table service',
+                         photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
+                         hashTags : [ 'furniture', 'wood'] ,
+                         discount : '82',
+                         validUntil : new Date('2022-01-21T20:12:32'),
+                         rating : 4,
+                         reviews : [{text:'Эти столы прекрасны!', rating:4}] ,
+                     },
+                     {
+                         id: '5',
+                         description : 'Скидка на шкафы - до 2%',
+                         label: 'Скидка на шкафы',
+                         createdAt : new Date('2021-01-28T20:12:32'),
+                         link : 'https://coollockers.ua',
+                         vendor : 'Locker service',
+                         photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
+                         hashTags : ['locker', 'furniture', 'wood'] ,
+                         discount : '2',
+                         validUntil : new Date('2022-02-21T20:12:32'),
+                         rating : 2,
+                         reviews : [{text:'Эти шкафы ужасны!', rating:2}] ,
+                     }
+             ];
+         localStorage.setItem("offersList", JSON.stringify(offersList));
+    }
+}
 
-    let view = new View([
-        {
-            id: '1',
-            description : 'Скидка на шкафы - до 79%',
-            label: 'Скидка на шкафы',
-            createdAt : new Date('2021-01-21T20:12:32'),
-            link : 'https://coollockers.ua',
-            vendor : 'Locker service',
-            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-            hashTags : ['locker', 'furniture', 'wood'] ,
-            discount : '79',
-            validUntil : new Date('2022-01-21T20:12:32'),
-            rating : 3.5,
-            reviews : [
-                {text:'Эти шкафы прекрасны!', rating:5},
-                {text:"Your shop is trash!", rating:2}
-                ],
-        },
-        {
-            id: '2',
-            description : 'Скидка на столы - до 73%',
-            label: 'Скидка на слолы',
-            createdAt : new Date('2021-03-13T20:12:32'),
-            link : 'https://coolTables.ua',
-            vendor : 'Table service',
-            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-            hashTags : ['Table', 'furniture', 'wood'] ,
-            discount : '73',
-            validUntil : new Date('2022-01-21T20:12:32'),
-            rating : 4,
-            reviews : [{text:'Эти столы прекрасны!', rating:4}] ,
-        },
-        {
-            id: '3',
-            description : 'Скидка на шкафы - до 76%',
-            label: 'Скидка на шкафы',
-            createdAt : new Date('2021-01-26T20:12:32'),
-            link : 'https://coollockers.ua',
-            vendor : 'Locker service',
-            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-            hashTags : ['locker', 'furniture', 'wood'] ,
-            discount : '76',
-            validUntil : new Date('2022-01-21T20:12:32'),
-            rating : 2,
-            reviews : [{text:'Эти шкафы прекрасны!', rating:2}] ,
-        },
-        {
-            id: '4',
-            description : 'Скидка на столы - до 82%',
-            label: 'Скидка на столы',
-            createdAt : new Date('2021-01-17T20:12:32'),
-            link : 'https://coolTables.ua',
-            vendor : 'Table service',
-            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-            hashTags : [ 'furniture', 'wood'] ,
-            discount : '82',
-            validUntil : new Date('2022-01-21T20:12:32'),
-            rating : 4,
-            reviews : [{text:'Эти столы прекрасны!', rating:4}] ,
-        },
-        {
-            id: '5',
-            description : 'Скидка на шкафы - до 2%',
-            label: 'Скидка на шкафы',
-            createdAt : new Date('2021-01-28T20:12:32'),
-            link : 'https://coollockers.ua',
-            vendor : 'Locker service',
-            photoLink : 'https://secure.img1-fg.wfcdn.com/im/30366256/compr-r85/8605/8605454/all-wood-club-2-tier-3-wide-gym-locker.jpg',
-            hashTags : ['locker', 'furniture', 'wood'] ,
-            discount : '2',
-            validUntil : new Date('2022-02-21T20:12:32'),
-            rating : 2,
-            reviews : [{text:'Эти шкафы ужасны!', rating:2}] ,
-        }
-], "пашка" , false);
+window.onload = function(){
+    startLocalStorage();
+    let view = new View("Pavel" , false);
 
 
     let filterConfig = {};
@@ -415,17 +433,31 @@ window.onload = function(){
         if(form.elements.reviewInput.value != '' && form.elements.ratingInput.value != ''){
             review.text = form.elements.reviewInput.value;
             review.rating = parseInt(form.elements.ratingInput.value);
-            view.addReview(editingId, review);
-            handleClickOnSiteName();
+            if(review.rating > 5 || review.rating < 1){
+                if(form.querySelector('.alert-wrong-data') != null){
+                    form.querySelector('.alert-wrong-data').remove();
+                }
+                let newParagraph = document.createElement('p');
+                newParagraph.className = 'alert-wrong-data';
+                newParagraph.textContent = "rating must be 1-5!";
+                newParagraph.style.marginBottom = '1rem';
+                form.querySelector(".add-review-button").after(newParagraph);
+            }
+            else {
+                view.addReview(editingId, review);
+                handleClickOnSiteName();
+            }
         }
         else {
-            if(form.querySelector('.alert-wrong-data') == null){
+                if(form.querySelector('.alert-wrong-data') != null){
+                    form.querySelector('.alert-wrong-data').remove();
+                }
                 let newParagraph = document.createElement('p');
                 newParagraph.className = 'alert-wrong-data';
                 newParagraph.textContent = "fields can't be empty!";
                 newParagraph.style.marginBottom = '1rem';
-                form.querySelector(".sign-in-button").after(newParagraph);
-            }
+                form.querySelector(".add-review-button").after(newParagraph);
+
         }
     }
     function addComment(button){

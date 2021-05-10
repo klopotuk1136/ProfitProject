@@ -1,7 +1,6 @@
 class AdsList{
     _adList = [];
-    constructor(adList){
-        this._adList = adList.concat();
+    constructor(){
     }
 
     getPage(skip = 0, top = 10, filterConfig = undefined){
@@ -151,6 +150,7 @@ class AdsList{
     add(ad){
         if (AdsList.validate(ad)) {
             this._adList.push(ad);
+            this.save();
             return true;
         }
         return false;
@@ -161,7 +161,7 @@ class AdsList{
             let index = this._adList.findIndex(ad => ad.id === id);
             if (index !== -1){
                 this._adList.splice(index, 1);
-    
+                this.save();
                 return true;
             }
         }
@@ -191,7 +191,7 @@ class AdsList{
         
         this.remove(id);
         this.add(tmpAd);
-
+        this.save();
         return true;
     }
 
@@ -202,12 +202,12 @@ class AdsList{
 
         newRating /= this.get(id).reviews.length;
         this.get(id).rating = newRating;
-        console.log(this.get(id));
     }
 
     addReview(id, review){
         this.get(id).reviews.push(review);
         this._countRating(id);
+        this.save();
     }
 
     addAll(adList){
@@ -218,5 +218,16 @@ class AdsList{
     }
     clear(){
         this._adList.splice(0, this._adList.length);
+    }
+    save(){
+        localStorage.setItem("offersList", JSON.stringify(this._adList));
+    }
+    restore(){
+        let adList = JSON.parse(localStorage.getItem("offersList")).concat();
+        adList.forEach(offer => {
+            offer.createdAt = new Date(offer.createdAt);
+            offer.validUntil = new Date(offer.validUntil);
+        });
+        this._adList = adList;
     }
 }

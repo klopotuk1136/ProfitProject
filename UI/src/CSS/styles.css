@@ -128,6 +128,7 @@ body{
 .rating-number{
     color: #2bd115;
 }
+
 .tag, .review{
 margin-left: .5rem;
 }
@@ -150,6 +151,10 @@ margin-left: .5rem;
     padding: .5rem;
     margin:.5rem;
     border:0.0625rem solid black;
+}
+.reviews-offer{
+    display: flex;
+    flex-direction: column;
 }
 .buttons{
     padding:.5rem;

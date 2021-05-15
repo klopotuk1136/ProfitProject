@@ -1,3 +1,5 @@
+package bsu.fpmi.profit;
+
 import java.io.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;

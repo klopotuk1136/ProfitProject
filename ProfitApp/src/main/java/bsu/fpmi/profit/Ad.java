@@ -1,3 +1,4 @@
+package bsu.fpmi.profit;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -5,13 +6,13 @@ import java.util.*;
 public class Ad {
     private String id;
     private String description;
-    private String createdAt;
+    private Date createdAt;
     private String link;
     private String vendor;
     private String photoLink;
     private List<String> hashTags;
     private String discount;
-    private String validUntil;
+    private Date validUntil;
     private int rating;
     private List<String> reviews;
 
@@ -19,31 +20,23 @@ public class Ad {
               String vendor, String photoLink, List<String> hashTags,
               String discount, String validUntil, int rating,
               List<String> reviews){
-        this.id = id;
-        this.description = description;
-        this.createdAt = createdAt;
-        this.link = link;
-        this.vendor = vendor;
-        this.photoLink = photoLink;
-        this.hashTags = new ArrayList<>(hashTags);
-        this.discount = discount;
-        this.validUntil = validUntil;
-        this.rating = rating;
-        this.reviews = new ArrayList<>(reviews);
-    }
-
-    public Ad(Ad newAd){
-        this.id = newAd.id;
-        this.description = newAd.description;
-        this.createdAt = newAd.createdAt;
-        this.link = newAd.link;
-        this.vendor = newAd.vendor;
-        this.photoLink = newAd.photoLink;
-        this.hashTags = new ArrayList<>(newAd.hashTags);
-        this.discount = newAd.discount;
-        this.validUntil = newAd.validUntil;
-        this.rating = newAd.rating;
-        this.reviews = new ArrayList<>(newAd.reviews);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            this.id = id;
+            this.description = description;
+            this.createdAt = sdf.parse(createdAt);
+            this.link = link;
+            this.vendor = vendor;
+            this.photoLink = photoLink;
+            this.hashTags = new ArrayList<>(hashTags);
+            this.discount = discount;
+            this.validUntil = sdf.parse(validUntil);
+            this.rating = rating;
+            this.reviews = new ArrayList<>(reviews);
+        }
+        catch (ParseException e){
+            System.out.println(e.getStackTrace());
+        }
     }
 
     @Override
@@ -67,11 +60,11 @@ public class Ad {
         return id;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public String getValidUntil() {
+    public Date getValidUntil() {
         return validUntil;
     }
 
@@ -120,13 +113,13 @@ public class Ad {
     }
 
     public void setHashTags(List<String> hashTags) {
-        Collections.copy(this.hashTags, hashTags);
+        this.hashTags = hashTags;
     }
 
     public void setDiscount(String discount) {
         this.discount = discount;
     }
-    public void setValidUntil(String validUntil){
+    public void setValidUntil(Date validUntil){
         this.validUntil = validUntil;
     }
 
@@ -135,7 +128,7 @@ public class Ad {
     }
 
     public void setReviews(List<String> reviews) {
-        Collections.copy(this.reviews, reviews);
+        this.reviews = reviews;
     }
 
     public void setId(String id) {

@@ -1,5 +1,5 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+package bsu.fpmi.profit;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -13,13 +13,16 @@ public class AdList {
         hashTags.add("tag1");
         hashTags.add("tag2");
         add(new Ad("1", "desc", "2021-01-29", "link1", "vend",
+                "photo", hashTags, "12", "2023-01-21", 2, hashTags));
+
+        add(new Ad("2", "desc", "2020-01-29", "link1", "vend",
                 "photo", hashTags, "12", "2022-01-21", 2, hashTags));
     }
 
     public static boolean validateAd(Ad ad) {
         return ad.getId() != null && ad.getId().length() >= 1 &&
                 ad.getDescription() != null && ad.getDescription().length() <= 200 && ad.getDescription().length() >= 1 &&
-                ad.getCreatedAt() != null && ad.getCreatedAt().length() >= 1 &&
+                ad.getCreatedAt() != null &&
                 ad.getLink() != null && ad.getLink().length() >= 1 &&
                 ad.getVendor() != null && ad.getVendor().length() >= 1 &&
                 ad.getHashTags() != null && ad.getHashTags().size() >= 1 && ad.getHashTags().size() <= 7 &&
@@ -90,30 +93,18 @@ public class AdList {
 
     public List<Ad> getPage(int start, int top, AdFilter filter) {
         List<Ad> filteredAds = new ArrayList<>(ads);
-
+        System.out.println(filter);
         Stream<Ad> stream = filteredAds.stream();
-        if (filter.getVendor().length() != 0){
+        if (filter.getVendor() != null && filter.getVendor().length() != 0){
             stream = stream.filter(ad -> ad.getVendor().equals(filter.getVendor()));
         }
-        if (filter.getDateUntil().length() != 0){
-            stream = stream.filter(ad -> ad.getValidUntil().equals(filter.getDateUntil()));
+        if (filter.getValidUntil() != null && filter.getValidUntil().length() != 0){
+            stream = stream.filter(ad -> ad.getValidUntil().equals(filter.getDateValidUntil()));
         }
-        if(filter.getHashTags().size() != 0) {
+        if(filter.getHashTags() != null && filter.getHashTags().size() != 0) {
             stream = stream.filter(ad -> ad.getHashTags().containsAll(filter.getHashTags()));
         }
-        filteredAds = stream.sorted((ad1, ad2) -> {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    try {
-                        Date date1 = sdf.parse(ad1.getCreatedAt());
-                        Date date2 = sdf.parse(ad1.getCreatedAt());
-                        return date1.compareTo(date2);
-
-                    } catch (ParseException e) {
-                        System.out.println(e.getStackTrace());
-                        return 0;
-                    }
-                }
-        ).collect(Collectors.toList());
+        filteredAds = stream.sorted((ad1, ad2) -> ad2.getCreatedAt().compareTo(ad1.getCreatedAt())).collect(Collectors.toList());
         if(start + top > filteredAds.size()){
             return filteredAds;
         }

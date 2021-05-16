@@ -9,7 +9,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AdsServlet extends HttpServlet {
+    private final String URL = "jdbc:mysql://localhost:3306/profit?serverTimezone=UTC";
+    private final String NAME = "root";
+    private final String PASSWORD = "123456789";
+    private ProfitCRUD profitCRUD;
     private static AdList adList = new AdList();
+
+    @Override
+    public void init() throws ServletException {
+        this.profitCRUD = new ProfitCRUD(URL, NAME, PASSWORD);
+        super.init();
+    }
+
+    @Override
+    public void destroy() {
+        this.profitCRUD.disconnect();
+        super.destroy();
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

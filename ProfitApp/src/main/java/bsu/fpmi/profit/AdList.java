@@ -12,15 +12,16 @@ public class AdList {
         List<String> hashTags = new ArrayList<>();
         hashTags.add("tag1");
         hashTags.add("tag2");
-        add(new Ad("1", "desc", "2021-01-29", "link1", "vend",
+        add(new Ad("1", "label1", "desc", "2021-01-29", "link1", "vend",
                 "photo", hashTags, "12", "2023-01-21", 2, hashTags));
 
-        add(new Ad("2", "desc", "2020-01-29", "link1", "vend",
+        add(new Ad("2","label2", "desc", "2020-01-29", "link1", "vend",
                 "photo", hashTags, "12", "2022-01-21", 2, hashTags));
     }
 
     public static boolean validateAd(Ad ad) {
         return ad.getId() != null && ad.getId().length() >= 1 &&
+                ad.getLabel() != null && ad.getLabel().length() >= 1 &&
                 ad.getDescription() != null && ad.getDescription().length() <= 200 && ad.getDescription().length() >= 1 &&
                 ad.getCreatedAt() != null &&
                 ad.getLink() != null && ad.getLink().length() >= 1 &&
@@ -56,6 +57,10 @@ public class AdList {
             return false;
         }
 
+
+        if(ad.getLabel() != null){
+            editingAd.setLabel(ad.getLabel());
+        }
         if (ad.getDescription() != null) {
             editingAd.setDescription(ad.getDescription());
         }

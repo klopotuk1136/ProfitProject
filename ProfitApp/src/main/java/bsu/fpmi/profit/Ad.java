@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Ad {
     private String id;
+    private String label;
     private String description;
     private Date createdAt;
     private String link;
@@ -16,22 +17,27 @@ public class Ad {
     private int rating;
     private List<String> reviews;
 
-    public Ad(String id, String description, String createdAt, String link,
+    public Ad(String id,String label, String description, String createdAt, String link,
               String vendor, String photoLink, List<String> hashTags,
               String discount, String validUntil, int rating,
               List<String> reviews){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             this.id = id;
+            this.label = label;
             this.description = description;
+            if(createdAt != null)
             this.createdAt = sdf.parse(createdAt);
             this.link = link;
             this.vendor = vendor;
             this.photoLink = photoLink;
+            if(hashTags != null)
             this.hashTags = new ArrayList<>(hashTags);
             this.discount = discount;
+            if(validUntil != null)
             this.validUntil = sdf.parse(validUntil);
             this.rating = rating;
+            if(reviews != null)
             this.reviews = new ArrayList<>(reviews);
         }
         catch (ParseException e){}
@@ -41,6 +47,7 @@ public class Ad {
     public String toString() {
         return "Ad{" +
                 "id='" + id + '\'' +
+                "label='" + label + '\'' +
                 ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +
                 ", link='" + link + '\'' +
@@ -56,6 +63,10 @@ public class Ad {
 
     public String getId(){
         return id;
+    }
+
+    public String getLabel(){
+        return label;
     }
 
     public Date getCreatedAt() {
@@ -92,6 +103,10 @@ public class Ad {
 
     public List<String> getReviews() {
         return reviews;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public String getDescription() {

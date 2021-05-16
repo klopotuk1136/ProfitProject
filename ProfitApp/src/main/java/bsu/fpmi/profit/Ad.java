@@ -34,9 +34,7 @@ public class Ad {
             this.rating = rating;
             this.reviews = new ArrayList<>(reviews);
         }
-        catch (ParseException e){
-            System.out.println(e.getStackTrace());
-        }
+        catch (ParseException e){}
     }
 
     @Override

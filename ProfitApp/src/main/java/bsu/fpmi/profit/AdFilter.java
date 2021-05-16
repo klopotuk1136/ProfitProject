@@ -11,7 +11,6 @@ public class AdFilter {
     private String validUntil;
     private List<String> hashTags;
     public AdFilter(String vendor, String validUntil, List<String> hashTags){
-        System.out.println(validUntil);
         this.validUntil = validUntil;
         this.vendor = vendor;
         this.hashTags = new ArrayList<>(hashTags);
@@ -33,9 +32,7 @@ public class AdFilter {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try{
             return sdf.parse(validUntil);
-        }catch(ParseException e){
-            System.out.println(e.getStackTrace());
-        }
+        }catch(ParseException e){}
         return null;
     }
 

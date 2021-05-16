@@ -74,7 +74,7 @@ public class AdList {
         if (ad.getValidUntil() != null) {
             editingAd.setValidUntil(ad.getValidUntil());
         }
-        if (ad.getRating() != -1) {
+        if (ad.getRating() >= 1 && ad.getRating() <= 5) {
             editingAd.setRating(ad.getRating());
         }
         if (ad.getReviews() != null) {
@@ -93,12 +93,11 @@ public class AdList {
 
     public List<Ad> getPage(int start, int top, AdFilter filter) {
         List<Ad> filteredAds = new ArrayList<>(ads);
-        System.out.println(filter);
         Stream<Ad> stream = filteredAds.stream();
         if (filter.getVendor() != null && filter.getVendor().length() != 0){
             stream = stream.filter(ad -> ad.getVendor().equals(filter.getVendor()));
         }
-        if (filter.getValidUntil() != null && filter.getValidUntil().length() != 0){
+        if (filter.getValidUntil() != null){
             stream = stream.filter(ad -> ad.getValidUntil().equals(filter.getDateValidUntil()));
         }
         if(filter.getHashTags() != null && filter.getHashTags().size() != 0) {

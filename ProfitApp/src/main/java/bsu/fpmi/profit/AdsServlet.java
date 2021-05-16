@@ -21,7 +21,6 @@ public class AdsServlet extends HttpServlet {
                 case "search": {
                     int start = (request.getParameter("start") != null) ? Integer.parseInt(request.getParameter("start")) : 0;
                     int top = (request.getParameter("top") != null) ? Integer.parseInt(request.getParameter("top")) : 10;
-                    //System.out.println((new Gson()).fromJson(request.getReader().readLine(), AdFilter.class));
                     response.getWriter().print((new Gson()).toJson(adList.getPage(start, top, (new Gson()).fromJson(request.getReader().readLine(), AdFilter.class))));
                     break;
                 }

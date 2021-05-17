@@ -13,11 +13,11 @@ public class AdsServlet extends HttpServlet {
     private final String NAME = "root";
     private final String PASSWORD = "123456789";
     private ProfitCRUD profitCRUD;
-    private static AdList adList = new AdList();
 
     @Override
     public void init() throws ServletException {
         this.profitCRUD = new ProfitCRUD(URL, NAME, PASSWORD);
+        profitCRUD.connect();
         super.init();
     }
 
@@ -37,15 +37,15 @@ public class AdsServlet extends HttpServlet {
                 case "search": {
                     int start = (request.getParameter("start") != null) ? Integer.parseInt(request.getParameter("start")) : 0;
                     int top = (request.getParameter("top") != null) ? Integer.parseInt(request.getParameter("top")) : 10;
-                    response.getWriter().print((new Gson()).toJson(adList.getPage(start, top, (new Gson()).fromJson(request.getReader().readLine(), AdFilter.class))));
+                    response.getWriter().print((new Gson()).toJson(profitCRUD.getPage(start, top, (new Gson()).fromJson(request.getReader().readLine(), AdFilter.class))));
                     break;
                 }
                 case "add": {
-                    response.getWriter().print((new Gson()).toJson(adList.add((new Gson()).fromJson(request.getReader().readLine(), Ad.class))));
+                    response.getWriter().print((new Gson()).toJson(profitCRUD.addOffer((new Gson()).fromJson(request.getReader().readLine(), Ad.class))));
                     break;
                 }
                 case "edit": {
-                    response.getWriter().print((new Gson()).toJson(adList.editAd(request.getParameter("id"),
+                    response.getWriter().print((new Gson()).toJson(profitCRUD.editOffer(request.getParameter("id"),
                             (new Gson()).fromJson(request.getReader().readLine(), Ad.class))));
                     break;
                 }
@@ -56,12 +56,12 @@ public class AdsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("json");
-        response.getWriter().print((new Gson()).toJson(adList.getAd(request.getParameter("id"))));
+        response.getWriter().print((new Gson()).toJson(profitCRUD.getOffer(request.getParameter("id"))));
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("json");
-        response.getWriter().print((new Gson()).toJson(adList.removeAd(request.getParameter("id"))));
+        response.getWriter().print((new Gson()).toJson(profitCRUD.deleteAd(request.getParameter("id"))));
     }
 }

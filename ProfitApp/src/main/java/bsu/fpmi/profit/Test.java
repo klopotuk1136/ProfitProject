@@ -1,5 +1,7 @@
 package bsu.fpmi.profit;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,16 +11,9 @@ public class Test {
         String name = "root";
         String password = "123456789";
         ProfitCRUD profitCRUD = new ProfitCRUD(url, name, password);
-        System.out.println(profitCRUD.connect());
 
-        List<String> hashTags = new ArrayList<>();
-        hashTags.add("lala666");
-        hashTags.add("lele444");
-        Ad ad = new Ad(null ,null, "desc", null, "newLink", null,
-                null, hashTags, null, null, 0, null);
+        profitCRUD.connect();
 
-
-
-        System.out.println(profitCRUD.deleteAd("3"));
+        System.out.println(profitCRUD.getPage(0, 10, (new Gson()).fromJson("{}", AdFilter.class)));
     }
 }

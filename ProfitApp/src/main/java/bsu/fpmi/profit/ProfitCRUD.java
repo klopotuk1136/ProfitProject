@@ -387,6 +387,31 @@ public class ProfitCRUD {
         return null;
     }
 
+    private PreparedStatement buildAddReviewPreparedStatement(String id, Review review) throws SQLException {
+        String sql = "INSERT INTO REVIEWS(USERNAME, OFFER_ID, REVIEW, RATING, review_date) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, review.getUsername());
+        preparedStatement.setInt(2, Integer.parseInt(id));
+        preparedStatement.setString(3, review.getReview());
+        preparedStatement.setInt(4, review.getRating());
+        preparedStatement.setTimestamp(5, java.sql.Timestamp.valueOf(review.getReviewDate()));
+        return preparedStatement;
+    }
+
+    public boolean addReview(String id, Review review){
+        try{
+
+            PreparedStatement preparedStatement = buildAddReviewPreparedStatement(id, review);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+            return true;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean disconnect(){
         try {
             connection.close();

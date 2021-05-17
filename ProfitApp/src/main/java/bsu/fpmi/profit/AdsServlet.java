@@ -49,6 +49,11 @@ public class AdsServlet extends HttpServlet {
                             (new Gson()).fromJson(request.getReader().readLine(), Ad.class))));
                     break;
                 }
+                case "review": {
+                    response.getWriter().print((new Gson()).toJson(profitCRUD.addReview(request.getParameter("id"),
+                            (new Gson()).fromJson(request.getReader().readLine(), Review.class))));
+                    break;
+                }
             }
         }
     }

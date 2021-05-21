@@ -66,6 +66,37 @@
         <servlet-name>AdsServlet</servlet-name>
         <url-pattern>/ads/*</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>bsu.fpmi.profit.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>bsu.fpmi.profit.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>bsu.fpmi.profit.SecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/ads/delete</url-pattern>
+        <url-pattern>/ads/edit</url-pattern>
+        <url-pattern>/ads/add</url-pattern>
+        <url-pattern>/ads/review</url-pattern>
+    </filter-mapping>
+
     <filter>
         <filter-name>WebFilter</filter-name>
         <filter-class>bsu.fpmi.profit.WebFilter</filter-class>

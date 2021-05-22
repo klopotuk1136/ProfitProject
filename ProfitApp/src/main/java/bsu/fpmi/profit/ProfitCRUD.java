@@ -28,6 +28,10 @@ public class ProfitCRUD {
         return false;
     }
 
+    public Connection getConnection(){
+        return connection;
+    }
+
     public static boolean validateOffer(Ad ad) {
         return ad.getId() != null && ad.getId().length() >= 1 &&
                 ad.getLabel() != null && ad.getLabel().length() >= 1 &&

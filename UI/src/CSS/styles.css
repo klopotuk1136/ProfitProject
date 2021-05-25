@@ -92,7 +92,7 @@ body{
     align-items: center;
     padding: 1.5rem;
 }
-.offer{
+.offer-tmp{
     display: flex;
     flex-direction:column;
     justify-content: start;
@@ -116,7 +116,7 @@ body{
 .image-and-percent{
     position:relative;
 }
-.image{
+.image-in-offer{
     width:15rem;
     height:15rem 
 }
@@ -127,6 +127,9 @@ body{
 }
 .rating-number{
     color: #2bd115;
+}
+.tag, .review{
+margin-left: .5rem;
 }
 .right-info-offer{
     width: 100%;

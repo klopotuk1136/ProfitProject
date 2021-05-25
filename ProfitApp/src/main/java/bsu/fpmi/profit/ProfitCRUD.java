@@ -28,17 +28,7 @@ public class ProfitCRUD {
         return false;
     }
 
-    public static boolean validateOffer(Ad ad) {
-        return ad.getId() != null && ad.getId().length() >= 1 &&
-                ad.getLabel() != null && ad.getLabel().length() >= 1 &&
-                ad.getDescription() != null && ad.getDescription().length() <= 200 && ad.getDescription().length() >= 1 &&
-                ad.getCreatedAt() != null &&
-                ad.getLink() != null && ad.getLink().length() >= 1 &&
-                ad.getVendor() != null && ad.getVendor().length() >= 1 &&
-                ad.getHashTags() != null && ad.getHashTags().size() >= 1 && ad.getHashTags().size() <= 7 &&
-                ad.getDiscount() != null && ad.getDiscount().length() >= 1 &&
-                ad.getReviews() != null;
-    }
+
 
     private PreparedStatement buildAddPreparedStatement(int offerId, int userId, Ad offer) throws SQLException {
         String sql = "INSERT INTO OFFER(OFFER_ID, USER_ID, OFFER_NAME, DESCRIPTION, VENDOR_LINK, VALID_UNTIL, DISCOUNT, CREATED_AT, PHOTO_LINK) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -67,7 +57,7 @@ public class ProfitCRUD {
     }
 
     public boolean addOffer(Ad offer){
-        if(validateOffer(offer)) {
+        if(offer.isValid()) {
             try {
 
                 String sql = "select user_id from user where username = ?";
@@ -98,7 +88,7 @@ public class ProfitCRUD {
         return false;
     }
 
-    private String getEditSqlString(Ad ad){
+    private static String getEditSqlString(Ad ad){
         StringBuilder sb = new StringBuilder("update offer set ");
         if(ad.getLabel() != null && ad.getLabel().length() != 0){
             sb.append("OFFER_NAME = ?, ");
@@ -123,7 +113,7 @@ public class ProfitCRUD {
         return sb.toString();
     }
 
-    private void editHashtags(String id, Ad ad) throws SQLException{
+    private void updateHashtags(String id, Ad ad) throws SQLException{
         String sql = "delete from hashtags where offer_id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, Integer.parseInt(id));
@@ -176,7 +166,7 @@ public class ProfitCRUD {
                 preparedStatement.close();
 
                 if (ad.getHashTags() != null) {
-                    editHashtags(id, ad);
+                    updateHashtags(id, ad);
                 }
 
                 return true;
@@ -213,27 +203,6 @@ public class ProfitCRUD {
         rs.close();
         preparedStatement.close();
         return tags;
-    }
-
-    private class ReviewsWrapper{
-        private List<String> reviews;
-        private double rating;
-
-        public List<String> getReviews() {
-            return reviews;
-        }
-
-        public double getRating() {
-            return rating;
-        }
-
-        public void setRating(double rating) {
-            this.rating = rating;
-        }
-
-        public void setReviews(List<String> reviews) {
-            this.reviews = reviews;
-        }
     }
 
     private ReviewsWrapper readReviews(String id) throws SQLException {
@@ -421,4 +390,26 @@ public class ProfitCRUD {
         }
         return false;
     }
+
+    private class ReviewsWrapper{
+        private List<String> reviews;
+        private double rating;
+
+        public List<String> getReviews() {
+            return reviews;
+        }
+
+        public double getRating() {
+            return rating;
+        }
+
+        public void setRating(double rating) {
+            this.rating = rating;
+        }
+
+        public void setReviews(List<String> reviews) {
+            this.reviews = reviews;
+        }
+    }
+
 }

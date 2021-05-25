@@ -26,19 +26,23 @@ public class Ad {
             this.id = id;
             this.label = label;
             this.description = description;
-            if(createdAt != null)
-            this.createdAt = sdf.parse(createdAt);
+            if(createdAt != null) {
+                this.createdAt = sdf.parse(createdAt);
+            }
             this.link = link;
             this.vendor = vendor;
             this.photoLink = photoLink;
-            if(hashTags != null)
-            this.hashTags = new ArrayList<>(hashTags);
+            if(hashTags != null) {
+                this.hashTags = hashTags;
+            }
             this.discount = discount;
-            if(validUntil != null)
-            this.validUntil = sdf.parse(validUntil);
+            if(validUntil != null) {
+                this.validUntil = sdf.parse(validUntil);
+            }
             this.rating = rating;
-            if(reviews != null)
-            this.reviews = new ArrayList<>(reviews);
+            if(reviews != null) {
+                this.reviews = reviews;
+            }
         }
         catch (ParseException e){}
     }
@@ -59,6 +63,18 @@ public class Ad {
                 ", rating=" + rating +
                 ", reviews=" + reviews +
                 '}';
+    }
+
+    public  boolean isValid() {
+        return this.getId() != null && this.getId().length() >= 1 &&
+                this.getLabel() != null && this.getLabel().length() >= 1 &&
+                this.getDescription() != null && this.getDescription().length() <= 200 && this.getDescription().length() >= 1 &&
+                this.getCreatedAt() != null &&
+                this.getLink() != null && this.getLink().length() >= 1 &&
+                this.getVendor() != null && this.getVendor().length() >= 1 &&
+                this.getHashTags() != null && this.getHashTags().size() >= 1 && this.getHashTags().size() <= 7 &&
+                this.getDiscount() != null && this.getDiscount().length() >= 1 &&
+                this.getReviews() != null;
     }
 
     public String getId(){

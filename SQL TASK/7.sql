@@ -1,0 +1,2 @@
+SELECT * FROM profit.OFFER
+WHERE length(DESCRIPTION) > 100
